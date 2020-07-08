@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+  <gresource prefix="/com/github/cassidyjames/plausible">
+    <file alias="Application.css">Application.css</file>
+    <file alias="logo-dark.png">logo-dark.png</file>
+  </gresource>
+</gresources>

@@ -1,0 +1,6 @@
+@define-color colorAccent #5850EC;
+@define-color colorDark #191E38;
+
+.loading {
+  background-color: @colorDark;
+}
