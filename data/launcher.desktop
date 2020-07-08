@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Plausible
+GenericName=Web Analytics
+Comment=See your Plausible.io stats
+Categories=Network;GTK;
+Exec=com.github.cassidyjames.plausible
+Icon=com.github.cassidyjames.plausible
+Terminal=false
+Type=Application
+X-GNOME-Gettext-Domain=com.github.cassidyjames.plausible
+Keywords=plausible;analytics;stats;
