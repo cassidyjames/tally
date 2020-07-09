@@ -45,22 +45,13 @@ public class Plausible.MainWindow : Gtk.Window {
         rgba.parse ("#5850EC");
         Granite.Widgets.Utils.set_color_primary (this, rgba);
 
-        // var back_button = new Gtk.Button.with_label ("Back") {
-        //   valign = Gtk.Align.CENTER
-        // };
-        // back_button.get_style_context ().add_class ("back-button");
-
-        // back_revealer = new Gtk.Revealer () {
-        //     transition_type = Gtk.RevealerTransitionType.SLIDE_RIGHT
-        // };
-        // back_revealer.add (back_button);
-
-        var sites_button = new Gtk.Button.from_icon_name ("go-home", Gtk.IconSize.LARGE_TOOLBAR) {
-            tooltip_text = "Sites"
+        var sites_button = new Gtk.Button.with_label ("My Websites") {
+            valign = Gtk.Align.CENTER
         };
+        sites_button.get_style_context ().add_class ("back-button");
 
         sites_revealer = new Gtk.Revealer () {
-            transition_type = Gtk.RevealerTransitionType.CROSSFADE
+            transition_type = Gtk.RevealerTransitionType.SLIDE_RIGHT
         };
         sites_revealer.add (sites_button);
 
@@ -106,8 +97,6 @@ public class Plausible.MainWindow : Gtk.Window {
             }
         });
 
-        // back_button.clicked.connect (web_view.go_back);
-
         sites_button.clicked.connect (() => {
             web_view.load_uri ("https://" + Application.instance.domain + "/sites");
         });
@@ -123,8 +112,6 @@ public class Plausible.MainWindow : Gtk.Window {
     }
 
     private void on_loading () {
-        // back_revealer.reveal_child = web_view.can_go_back ();
-
         sites_revealer.reveal_child = (
             web_view.uri != "https://" + Application.instance.domain + "/login" &&
             web_view.uri != "https://" + Application.instance.domain + "/register" &&

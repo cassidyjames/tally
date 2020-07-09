@@ -1,2 +1,5 @@
 # plausible
-Native + web app for Plausible, designed for elementary OS
+
+UNOFFICIAL hybrid native + web app for Plausible
+
+![Screenshot](data/screenshot.png)
