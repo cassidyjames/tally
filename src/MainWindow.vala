@@ -1,5 +1,5 @@
 /*
-* Copyright © 2020 Cassidy James Blaede (https://cassidyjames.com)
+* Copyright © 2020–2021 Cassidy James Blaede (https://cassidyjames.com)
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public
@@ -75,7 +75,7 @@ public class Plausible.MainWindow : Gtk.Window {
         web_view = new Plausible.WebView ();
         web_view.load_uri ("https://" + Application.instance.domain + "/sites");
 
-        var logo = new Gtk.Image.from_resource ("/com/github/cassidyjames/plausible/logo-dark.png") {
+        var logo = new Gtk.Image.from_resource ("/com/cassidyjames/plausible/logo-dark.png") {
             expand = true,
             margin_bottom = 48
         };

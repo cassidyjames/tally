@@ -1,5 +1,5 @@
 /*
-* Copyright © 2020 Cassidy James Blaede (https://cassidyjames.com)
+* Copyright © 2020–2021 Cassidy James Blaede (https://cassidyjames.com)
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public
@@ -24,7 +24,7 @@ public class Plausible.Application : Gtk.Application {
 
     public Application () {
         Object (
-            application_id: "com.github.cassidyjames.plausible"
+            application_id: "com.cassidyjames.plausible"
         );
     }
 
@@ -40,7 +40,7 @@ public class Plausible.Application : Gtk.Application {
 
     protected override void activate () {
         var provider = new Gtk.CssProvider ();
-        provider.load_from_resource ("/com/github/cassidyjames/plausible/Application.css");
+        provider.load_from_resource ("/com/cassidyjames/plausible/Application.css");
         Gtk.StyleContext.add_provider_for_screen (
             Gdk.Screen.get_default (),
             provider,
