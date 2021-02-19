@@ -136,6 +136,52 @@ public class Plausible.MainWindow : Gtk.Window {
         web_view.notify["uri"].connect (on_loading);
         web_view.notify["estimated-load-progress"].connect (on_loading);
         web_view.notify["is-loading"].connect (on_loading);
+
+        Application.settings.bind ("zoom", web_view, "zoom-level", SettingsBindFlags.DEFAULT);
+
+        var accel_group = new Gtk.AccelGroup ();
+
+        accel_group.connect (
+            Gdk.Key.plus,
+            Gdk.ModifierType.CONTROL_MASK,
+            Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
+            () => {
+                zoom_in ();
+                return true;
+            }
+        );
+
+        accel_group.connect (
+            Gdk.Key.equal,
+            Gdk.ModifierType.CONTROL_MASK,
+            Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
+            () => {
+                zoom_in ();
+                return true;
+            }
+        );
+
+        accel_group.connect (
+            Gdk.Key.minus,
+            Gdk.ModifierType.CONTROL_MASK,
+            Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
+            () => {
+                zoom_out ();
+                return true;
+            }
+        );
+
+        accel_group.connect (
+            Gdk.Key.@0,
+            Gdk.ModifierType.CONTROL_MASK,
+            Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
+            () => {
+                zoom_default ();
+                return true;
+            }
+        );
+
+        add_accel_group (accel_group);
     }
 
     private void on_loading () {
@@ -160,5 +206,35 @@ public class Plausible.MainWindow : Gtk.Window {
                 account_stack.visible_child_name = "account";
             }
         }
+    }
+
+    private void zoom_in () {
+        if (web_view.zoom_level < 5.0) {
+            web_view.zoom_level = web_view.zoom_level + 0.1;
+        } else {
+            Gdk.beep ();
+        }
+
+        return;
+    }
+
+    private void zoom_out () {
+        if (web_view.zoom_level > 0.2) {
+            web_view.zoom_level = web_view.zoom_level - 0.1;
+        } else {
+            Gdk.beep ();
+        }
+
+        return;
+    }
+
+    private void zoom_default () {
+        if (web_view.zoom_level != 1.0) {
+            web_view.zoom_level = 1.0;
+        } else {
+            Gdk.beep ();
+        }
+
+        return;
     }
 }

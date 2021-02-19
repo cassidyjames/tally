@@ -21,6 +21,7 @@
 
 public class Plausible.Application : Gtk.Application {
     public string domain = "plausible.io";
+    public static GLib.Settings settings;
 
     public Application () {
         Object (
@@ -36,6 +37,10 @@ public class Plausible.Application : Gtk.Application {
             }
             return _instance;
         }
+    }
+
+    static construct {
+        settings = new Settings (Application.instance.application_id);
     }
 
     protected override void activate () {
