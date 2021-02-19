@@ -19,7 +19,7 @@
     <control>touch</control>
   </recommends>
   <releases>
-    <release version="1.0.0" date="2021-02-18">
+    <release version="1.0.1" date="2021-02-19">
       <description>
         <p>Initial release</p>
       </description>
