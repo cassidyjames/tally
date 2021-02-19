@@ -1,7 +1,7 @@
 project(
     'com.cassidyjames.plausible',
     'vala', 'c',
-    version: '0.0.1'
+    version: '1.0.0'
 )
 
 gnome = import('gnome')
@@ -26,8 +26,6 @@ executable(
     dependencies: [
         dependency('granite'),
         dependency('gtk+-3.0'),
-        # dependency('javascriptcoregtk-4.0'),
-        # dependency('libsoup-2.4'),
         dependency('webkit2gtk-4.0'),
     ],
     install: true
