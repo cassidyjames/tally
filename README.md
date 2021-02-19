@@ -1,6 +1,6 @@
 # Plausible
 
-Unofficial hybrid native + web app for Plausible
+Hybrid native + web app for [Plausible Analytics](https://plausible.io)
 
 ![Screenshot](data/screenshot.png)
 
