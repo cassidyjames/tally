@@ -40,5 +40,5 @@ com.cassidyjames.plausible
 Building is also possible with Flatpak. Ensure you have Flathub added as a user repo, then from the top-level of this repo:
 
 ```shell
-flatpak-builder --user --force-clean --install-deps-from=flathub --install build-dir com.cassidyjames.plausible.yml
+flatpak-builder --user --force-clean --install-deps-from=flathub --install build-dir com.cassidyjames.plausible.yaml
 ```
