@@ -30,6 +30,11 @@
     <control>touch</control>
   </recommends>
   <releases>
+    <release version="1.1.0" date="2021-02-19">
+      <description>
+        <p>Save and restore state when closed and opened</p>
+      </description>
+    </release>
     <release version="1.0.1" date="2021-02-19">
       <description>
         <p>Initial release</p>
