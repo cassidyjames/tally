@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2021 Cassidy James Blaede <c@ssidyjam.es> -->
+<component type="desktop">
+  <id>com.cassidyjames.plausible</id>
+  <name>Plausible</name>
+  <summary>Simple and privacy-friendly alternative to Google Analytics</summary>
+  <metadata_license>CC-BY-SA-4.0</metadata_license>
+  <project_license>GPL-3.0-only</project_license>
+  <description>
+    <p>Hybrid native + web app for Plausible Analytics, the lightweight and open-source website analytics tool.</p>
+  </description>
+  <provides>
+    <binary>com.cassidyjames.plausible</binary>
+  </provides>
+  <launchable type="desktop-id">com.cassidyjames.plausible.desktop</launchable>
+  <recommends>
+    <control>pointing</control>
+    <control>keyboard</control>
+    <control>touch</control>
+  </recommends>
+  <releases>
+    <release version="1.0.0" date="2021-02-18">
+      <description>
+        <p>Initial release</p>
+      </description>
+    </release>
+  </releases>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://raw.githubusercontent.com/cassidyjames/plausible/main/data/screenshot.png</image>
+    </screenshot>
+  </screenshots>
+  <content_rating type="oars-1.1">
+    <content_attribute id="social-info">mild</content_attribute>
+  </content_rating>
+  <developer_name>Cassidy James Blaede</developer_name>
+  <url type="homepage">https://cassidyjames.com</url>
+  <url type="bugtracker">https://github.com/cassidyjames/plausible/issues</url>
+  <url type="donation">https://cassidyjames.com/pay</url>
+  <url type="help">https://cassidyjames.com/support</url>
+  <!--url type="contact">https://cassidyjames.com/support</url-->
+  <custom>
+    <value key="x-appcenter-color-primary">#3b2a7d</value>
+    <value key="x-appcenter-color-primary-text">#fff</value>
+    <value key="x-appcenter-suggested-price">9</value>
+  </custom>
+</component>

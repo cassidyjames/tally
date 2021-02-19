@@ -15,3 +15,9 @@ install_data(
     install_dir: join_paths(get_option('datadir'), 'applications'),
     rename: meson.project_name() + '.desktop'
 )
+
+install_data(
+    'metainfo.xml',
+    install_dir: join_paths(get_option('datadir'), 'metainfo'),
+    rename: meson.project_name() + '.metainfo.xml'
+)
