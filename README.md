@@ -28,7 +28,7 @@ cd build
 ninja
 ```
 
-To install, use `ninja install`, then execute with `com.github.cassidyjames.plausible`:
+To install, use `ninja install`, then execute with `com.cassidyjames.plausible`:
 
 ```shell
 sudo ninja install
