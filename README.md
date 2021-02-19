@@ -8,7 +8,7 @@ Plausible is the simple privacy-friendly alternative to Google Analytics. This a
 
 - Icon in your Applications Menu, Dock, etc.
 - Native header bar with buttons for account settings and logging out
-- Save and restore window size and position when closed and opened
+- Save and restore current view, size, and position when closed and opened
 - Two-finger swipe to go back/forward between views
 
 Other features:

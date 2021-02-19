@@ -11,7 +11,7 @@
     <ul>
       <li>Icon in your Applications Menu, Dock, etc.</li>
       <li>Native header bar with buttons for account settings and logging out</li>
-      <li>Save and restore window size and position when closed and opened</li>
+      <li>Save and restore current view, size, and position when closed and opened</li>
       <li>Two-finger swipe to go back/forward between views</li>
     </ul>
     <p>Other features:</p>
