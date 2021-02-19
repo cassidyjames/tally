@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist>
   <schema path="/com/cassidyjames/plausible/" id="com.cassidyjames.plausible">
+    <key name="current-url" type="s">
+      <default>""</default>
+      <summary>Current URL</summary>
+      <description>The last-viewed URL for restoring state</description>
+    </key>
     <key name="window-maximized" type="b">
       <default>false</default>
       <summary>Window maximized</summary>

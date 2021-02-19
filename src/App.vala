@@ -19,33 +19,33 @@
 * Authored by: Cassidy James Blaede <c@ssidyjam.es>
 */
 
-public class Plausible.Application : Gtk.Application {
+public class Plausible.App : Gtk.Application {
     public string domain = "plausible.io";
     public static GLib.Settings settings;
 
-    public Application () {
+    public App () {
         Object (
             application_id: "com.cassidyjames.plausible"
         );
     }
 
-    public static Application _instance = null;
-    public static Application instance {
+    public static App _instance = null;
+    public static App instance {
         get {
             if (_instance == null) {
-                _instance = new Application ();
+                _instance = new App ();
             }
             return _instance;
         }
     }
 
     static construct {
-        settings = new Settings (Application.instance.application_id);
+        settings = new Settings (App.instance.application_id);
     }
 
     protected override void activate () {
         var provider = new Gtk.CssProvider ();
-        provider.load_from_resource ("/com/cassidyjames/plausible/Application.css");
+        provider.load_from_resource ("/com/cassidyjames/plausible/App.css");
         Gtk.StyleContext.add_provider_for_screen (
             Gdk.Screen.get_default (),
             provider,
@@ -65,7 +65,7 @@ public class Plausible.Application : Gtk.Application {
     }
 
     public static int main (string[] args) {
-        var app = new Application ();
+        var app = new App ();
         return app.run (args);
     }
 }

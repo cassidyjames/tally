@@ -30,7 +30,7 @@ public class Plausible.MainWindow : Gtk.Window {
         Object (
             application: application,
             border_width: 0,
-            icon_name: Application.instance.application_id,
+            icon_name: App.instance.application_id,
             resizable: true,
             title: "Plausible",
             window_position: Gtk.WindowPosition.CENTER
@@ -38,15 +38,12 @@ public class Plausible.MainWindow : Gtk.Window {
     }
 
     construct {
-        default_height = 700;
-        default_width = 1000;
-
         Gtk.Settings.get_default ().gtk_application_prefer_dark_theme = true;
         Gdk.RGBA rgba = { 0, 0, 0, 1 };
         rgba.parse ("#5850EC");
         Granite.Widgets.Utils.set_color_primary (this, rgba);
 
-        var sites_button = new Gtk.Button.with_label ("My Websites") {
+        var sites_button = new Gtk.Button.with_label ("Sites") {
             valign = Gtk.Align.CENTER
         };
         sites_button.get_style_context ().add_class ("back-button");
@@ -83,7 +80,13 @@ public class Plausible.MainWindow : Gtk.Window {
         header.pack_end (account_revealer);
 
         web_view = new Plausible.WebView ();
-        web_view.load_uri ("https://" + Application.instance.domain + "/sites");
+
+        string current_url = App.settings.get_string ("current-url");
+        if (current_url != "") {
+            web_view.load_uri (current_url);
+        } else {
+            web_view.load_uri ("https://" + App.instance.domain + "/sites");
+        }
 
         var logo = new Gtk.Image.from_resource ("/com/cassidyjames/plausible/logo-dark.png") {
             expand = true,
@@ -103,8 +106,8 @@ public class Plausible.MainWindow : Gtk.Window {
 
         int window_x, window_y;
         int window_width, window_height;
-        Application.settings.get ("window-position", "(ii)", out window_x, out window_y);
-        Application.settings.get ("window-size", "(ii)", out window_width, out window_height);
+        App.settings.get ("window-position", "(ii)", out window_x, out window_y);
+        App.settings.get ("window-size", "(ii)", out window_width, out window_height);
 
         if (window_x != -1 || window_y != -1) {
             move (window_x, window_y);
@@ -112,7 +115,7 @@ public class Plausible.MainWindow : Gtk.Window {
 
         resize (window_width, window_height);
 
-        if (Application.settings.get_boolean ("window-maximized")) {
+        if (App.settings.get_boolean ("window-maximized")) {
             maximize ();
         }
 
@@ -123,17 +126,17 @@ public class Plausible.MainWindow : Gtk.Window {
         });
 
         sites_button.clicked.connect (() => {
-            web_view.load_uri ("https://" + Application.instance.domain + "/sites");
+            web_view.load_uri ("https://" + App.instance.domain + "/sites");
         });
 
         account_button.clicked.connect (() => {
-            web_view.load_uri ("https://" + Application.instance.domain + "/settings");
+            web_view.load_uri ("https://" + App.instance.domain + "/settings");
         });
 
         logout_button.clicked.connect (() => {
             // NOTE: Plausible expects a POST not just loading the URL
             // https://github.com/plausible/analytics/issues/730
-            // web_view.load_uri ("https://" + Application.instance.domain + "/logout");
+            // web_view.load_uri ("https://" + App.instance.domain + "/logout");
 
             web_view.get_website_data_manager ().clear.begin (
                 WebKit.WebsiteDataTypes.COOKIES,
@@ -141,7 +144,7 @@ public class Plausible.MainWindow : Gtk.Window {
                 null,
                 () => {
                     debug ("Cleared cookies; going home.");
-                    web_view.load_uri ("https://" + Application.instance.domain + "/sites");
+                    web_view.load_uri ("https://" + App.instance.domain + "/sites");
                 }
             );
         });
@@ -151,7 +154,7 @@ public class Plausible.MainWindow : Gtk.Window {
         web_view.notify["estimated-load-progress"].connect (on_loading);
         web_view.notify["is-loading"].connect (on_loading);
 
-        Application.settings.bind ("zoom", web_view, "zoom-level", SettingsBindFlags.DEFAULT);
+        App.settings.bind ("zoom", web_view, "zoom-level", SettingsBindFlags.DEFAULT);
 
         var accel_group = new Gtk.AccelGroup ();
 
@@ -205,17 +208,17 @@ public class Plausible.MainWindow : Gtk.Window {
                 configure_id = 0;
 
                 if (is_maximized) {
-                    Application.settings.set_boolean ("window-maximized", true);
+                    App.settings.set_boolean ("window-maximized", true);
                 } else {
-                    Application.settings.set_boolean ("window-maximized", false);
+                    App.settings.set_boolean ("window-maximized", false);
 
                     int width, height;
                     get_size (out width, out height);
-                    Application.settings.set ("window-size", "(ii)", width, height);
+                    App.settings.set ("window-size", "(ii)", width, height);
 
                     int root_x, root_y;
                     get_position (out root_x, out root_y);
-                    Application.settings.set ("window-position", "(ii)", root_x, root_y);
+                    App.settings.set ("window-position", "(ii)", root_x, root_y);
                 }
 
                 return GLib.Source.REMOVE;
@@ -229,23 +232,25 @@ public class Plausible.MainWindow : Gtk.Window {
         // Only do anything once we're done loading
         if (! web_view.is_loading) {
             sites_revealer.reveal_child = (
-                web_view.uri != "https://" + Application.instance.domain + "/login" &&
-                web_view.uri != "https://" + Application.instance.domain + "/register" &&
-                web_view.uri != "https://" + Application.instance.domain + "/password/request-reset" &&
-                web_view.uri != "https://" + Application.instance.domain + "/sites"
+                web_view.uri != "https://" + App.instance.domain + "/login" &&
+                web_view.uri != "https://" + App.instance.domain + "/register" &&
+                web_view.uri != "https://" + App.instance.domain + "/password/request-reset" &&
+                web_view.uri != "https://" + App.instance.domain + "/sites"
             );
 
             account_revealer.reveal_child = (
-                web_view.uri != "https://" + Application.instance.domain + "/login" &&
-                web_view.uri != "https://" + Application.instance.domain + "/register" &&
-                web_view.uri != "https://" + Application.instance.domain + "/password/request-reset"
+                web_view.uri != "https://" + App.instance.domain + "/login" &&
+                web_view.uri != "https://" + App.instance.domain + "/register" &&
+                web_view.uri != "https://" + App.instance.domain + "/password/request-reset"
             );
 
-            if (web_view.uri == "https://" + Application.instance.domain + "/settings") {
+            if (web_view.uri == "https://" + App.instance.domain + "/settings") {
                 account_stack.visible_child_name = "logout";
             } else {
                 account_stack.visible_child_name = "account";
             }
+
+            App.settings.set_string ("current-url", web_view.uri);
         }
     }
 
