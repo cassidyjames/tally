@@ -1,6 +1,6 @@
 # Plausible
 
-Hybrid native + web app for [Plausible Analytics](https://plausible.io)
+Hybrid native + web app for [Plausible Analytics](https://plausible.io). Designed for elementary OS.
 
 ![Screenshot](data/screenshot.png)
 
