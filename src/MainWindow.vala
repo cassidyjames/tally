@@ -21,10 +21,10 @@
 
 public class Plausible.MainWindow : Gtk.Window {
     private Plausible.WebView web_view;
-    // private Gtk.Revealer back_revealer;
     private Gtk.Revealer account_revealer;
     private Gtk.Stack account_stack;
     private Gtk.Revealer sites_revealer;
+    private uint configure_id;
 
     public MainWindow (Gtk.Application application) {
         Object (
@@ -79,7 +79,6 @@ public class Plausible.MainWindow : Gtk.Window {
             has_subtitle = false,
             show_close_button = true
         };
-        // header.pack_start (back_revealer);
         header.pack_start (sites_revealer);
         header.pack_end (account_revealer);
 
@@ -101,6 +100,21 @@ public class Plausible.MainWindow : Gtk.Window {
 
         set_titlebar (header);
         add (stack);
+
+        int window_x, window_y;
+        int window_width, window_height;
+        Application.settings.get ("window-position", "(ii)", out window_x, out window_y);
+        Application.settings.get ("window-size", "(ii)", out window_width, out window_height);
+
+        if (window_x != -1 || window_y != -1) {
+            move (window_x, window_y);
+        }
+
+        resize (window_width, window_height);
+
+        if (Application.settings.get_boolean ("window-maximized")) {
+            maximize ();
+        }
 
         web_view.load_changed.connect ((load_event) => {
             if (load_event == WebKit.LoadEvent.FINISHED) {
@@ -182,6 +196,33 @@ public class Plausible.MainWindow : Gtk.Window {
         );
 
         add_accel_group (accel_group);
+    }
+
+    public override bool configure_event (Gdk.EventConfigure event) {
+        if (configure_id == 0) {
+            /* Avoid spamming the settings */
+            configure_id = Timeout.add (200, () => {
+                configure_id = 0;
+
+                if (is_maximized) {
+                    Application.settings.set_boolean ("window-maximized", true);
+                } else {
+                    Application.settings.set_boolean ("window-maximized", false);
+
+                    int width, height;
+                    get_size (out width, out height);
+                    Application.settings.set ("window-size", "(ii)", width, height);
+
+                    int root_x, root_y;
+                    get_position (out root_x, out root_y);
+                    Application.settings.set ("window-position", "(ii)", root_x, root_y);
+                }
+
+                return GLib.Source.REMOVE;
+            });
+        }
+
+        return base.configure_event (event);
     }
 
     private void on_loading () {
