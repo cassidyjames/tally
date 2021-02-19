@@ -1,5 +1,5 @@
 /*
-* Copyright © 2020 Cassidy James Blaede (https://cassidyjames.com)
+* Copyright © 2020–2021 Cassidy James Blaede (https://cassidyjames.com)
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public
@@ -32,6 +32,9 @@ public class Plausible.WebView : WebKit.WebView {
             default_font_family = Gtk.Settings.get_default ().gtk_font_name,
             enable_accelerated_2d_canvas = true,
             enable_back_forward_navigation_gestures = true,
+            // TODO: only enable when running from Terminal
+            // https://github.com/cassidyjames/plausible/issues/11
+            // enable_developer_extras = true,
             enable_dns_prefetching = true,
             enable_html5_database = true,
             enable_html5_local_storage = true,
@@ -40,11 +43,12 @@ public class Plausible.WebView : WebKit.WebView {
             hardware_acceleration_policy = WebKit.HardwareAccelerationPolicy.ALWAYS
         };
 
+        // NOTE: Show only the main UI and login form; could be handled better
+        // if the Plausible web app used a semantic footer instead of a div
         var custom_css = new WebKit.UserStyleSheet (
             """
-            nav,
-            footer {
-                display: none;
+            body > :not(main):not(form) {
+              display: none;
             }
             """,
             WebKit.UserContentInjectedFrames.TOP_FRAME,
@@ -78,6 +82,9 @@ public class Plausible.WebView : WebKit.WebView {
         WebKit.HitTestResult hit_test_result
     ) {
         // Disable context menu
+        // TODO: only disable when not running from Terminal
+        // https://github.com/cassidyjames/plausible/issues/11
         return true;
+        // return false;
     }
 }
