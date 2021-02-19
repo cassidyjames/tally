@@ -7,14 +7,15 @@ Hybrid native + web app for [Plausible Analytics](https://plausible.io). Designe
 Plausible is the simple privacy-friendly alternative to Google Analytics. This app wraps the Plausible web app in a native UI, integrating better with desktop operating systems like elementary OS. Native features include:
 
 - Icon in your Applications Menu, Dock, etc.
-- Native header bar replaces web app UI
-- Native buttons to go to account settings and log out
-- Slimmed down web app UI (no header or footer with external links)
+- Native header bar with buttons for account settings and logging out
+- Save and restore current view, size, and position when closed and opened
 - Two-finger swipe to go back/forward between views
 
 Other features:
 
 - Zoom in/out with Ctrl+Plus/Minus, and it's remembered the next time you use the app
+- Slimmed down web app UI (no header or footer with external links)
+
 
 ## Developing and Building
 

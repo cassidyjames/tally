@@ -1,6 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist>
   <schema path="/com/cassidyjames/plausible/" id="com.cassidyjames.plausible">
+    <key name="current-url" type="s">
+      <default>""</default>
+      <summary>Current URL</summary>
+      <description>The last-viewed URL for restoring state</description>
+    </key>
+    <key name="window-maximized" type="b">
+      <default>false</default>
+      <summary>Window maximized</summary>
+      <description>Whether the window was maximized on last run</description>
+    </key>
+    <key name="window-position" type="(ii)">
+      <default>(-1, -1)</default>
+      <summary>Window position</summary>
+      <description>Most recent window position (x, y)</description>
+    </key>
+    <key name="window-size" type="(ii)">
+      <default>(1000, 700)</default>
+      <summary>Window size</summary>
+      <description>Most recent window size (width, height)</description>
+    </key>
     <key name="zoom" type="d">
       <default>1.0</default>
       <summary>Zoom level</summary>
