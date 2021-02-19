@@ -64,7 +64,7 @@ public class Plausible.MainWindow : Gtk.Window {
             tooltip_text = "Log Out"
         };
 
-        account_stack = new Gtk.Stack (){
+        account_stack = new Gtk.Stack () {
             transition_type = Gtk.StackTransitionType.CROSSFADE
         };
         account_stack.add_named (account_button, "account");
