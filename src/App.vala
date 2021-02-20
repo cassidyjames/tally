@@ -59,6 +59,22 @@ public class Plausible.App : Gtk.Application {
         add_action (quit_action);
         set_accels_for_action ("app.quit", {"<Ctrl>Q"});
 
+        var granite_settings = Granite.Settings.get_default ();
+        var gtk_settings = Gtk.Settings.get_default ();
+
+        gtk_settings.set_property ("gtk-icon-theme-name", "elementary");
+        gtk_settings.set_property ("gtk-theme-name", "io.elementary.stylesheet.slate");
+
+        gtk_settings.gtk_application_prefer_dark_theme = (
+            granite_settings.prefers_color_scheme == Granite.Settings.ColorScheme.DARK
+        );
+
+        granite_settings.notify["prefers-color-scheme"].connect (() => {
+            gtk_settings.gtk_application_prefer_dark_theme = (
+                granite_settings.prefers_color_scheme == Granite.Settings.ColorScheme.DARK
+            );
+        });
+
         quit_action.activate.connect (() => {
             quit ();
         });

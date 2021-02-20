@@ -1,6 +1,14 @@
-@define-color colorAccent #5850EC;
-@define-color colorDark #191E38;
+@define-color accent_color @color_primary;
+@define-color colorPrimary @color_primary;
+@define-color plausible_dark #1A202C;
 
 .loading {
-  background-color: @colorDark;
+  background-color: @plausible_dark;
+}
+
+.titlebar .title,
+.titlebar .titlebutton {
+  color: white;
+  text-shadow: none;
+  -gtk-icon-shadow: none;
 }
