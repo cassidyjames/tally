@@ -6,14 +6,43 @@ base-version: 'juno-20.08'
 sdk: org.gnome.Sdk
 command: com.cassidyjames.plausible
 finish-args:
-  - --socket=wayland
-  - --socket=fallback-x11
-  - --share=network
-  - --socket=session-bus
-  - --device=dri
+- --socket=wayland
+- --socket=fallback-x11
+- --share=network
+- --socket=session-bus
+- --device=dri
 modules:
-  - name: plausible
-    buildsystem: meson
+- name: elementary-stylesheet
+  buildsystem: meson
+  sources:
+  - type: git
+    url: https://github.com/elementary/stylesheet.git
+  modules:
+  - name: sassc
+    cleanup:
+    - "*"
     sources:
-      - type: dir
-        path: .
+    - type: git
+      url: https://github.com/sass/sassc.git
+      tag: 3.6.1
+    - type: script
+      dest-filename: autogen.sh
+      commands:
+      - autoreconf -si
+    modules:
+    - name: libsass
+      cleanup:
+      - "*"
+      sources:
+      - type: git
+        url: https://github.com/sass/libsass.git
+        tag: 3.6.4
+      - type: script
+        dest-filename: autogen.sh
+        commands:
+        - autoreconf -si
+- name: plausible
+  buildsystem: meson
+  sources:
+  - type: dir
+    path: .

@@ -59,6 +59,9 @@ public class Plausible.App : Gtk.Application {
         add_action (quit_action);
         set_accels_for_action ("app.quit", {"<Ctrl>Q"});
 
+        // Gtk.Settings.get_default().set_property("gtk-icon-theme-name", "elementary");
+        // Gtk.Settings.get_default().set_property("gtk-theme-name", "elementary");
+
         quit_action.activate.connect (() => {
             quit ();
         });
