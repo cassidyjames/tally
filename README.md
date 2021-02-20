@@ -23,6 +23,7 @@ Development is targeted at [elementary OS](https://elementary.io). If you want t
 
 * libgranite-dev (>=5.5)
 * libgtk-3-dev
+* libhandy-1-dev
 * libwebkit2gtk-4.0-dev
 * meson
 * valac
