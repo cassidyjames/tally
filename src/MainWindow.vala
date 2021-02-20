@@ -42,20 +42,6 @@ public class Plausible.MainWindow : Hdy.Window {
     construct {
         Hdy.init ();
 
-        var granite_settings = Granite.Settings.get_default ();
-        var gtk_settings = Gtk.Settings.get_default ();
-        gtk_settings.gtk_application_prefer_dark_theme = true;
-
-        gtk_settings.gtk_application_prefer_dark_theme = (
-            granite_settings.prefers_color_scheme == Granite.Settings.ColorScheme.DARK
-        );
-
-        granite_settings.notify["prefers-color-scheme"].connect (() => {
-            gtk_settings.gtk_application_prefer_dark_theme = (
-                granite_settings.prefers_color_scheme == Granite.Settings.ColorScheme.DARK
-            );
-        });
-
         Gdk.RGBA rgba_purple = { 0, 0, 0, 1 };
         rgba_purple.parse (PURPLE);
 
@@ -102,7 +88,6 @@ public class Plausible.MainWindow : Hdy.Window {
         header.pack_end (account_revealer);
 
         web_view = new Plausible.WebView ();
-        set_light (web_view);
 
         string current_url = App.settings.get_string ("current-url");
         if (current_url != "") {
@@ -311,26 +296,5 @@ public class Plausible.MainWindow : Hdy.Window {
         }
 
         return;
-    }
-
-    private void set_light (Gtk.Widget widget) {
-        var gtk_settings = Gtk.Settings.get_default ();
-
-        try {
-            var css_provider = Gtk.CssProvider.get_named (gtk_settings.gtk_theme_name, null);
-            widget.get_style_context ().add_provider (css_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION);
-        } catch (Error e) {
-            critical (e.message);
-        }
-
-        if (widget is Gtk.Container) {
-            debug ("Container: %s", widget.name);
-            var container = (Gtk.Container) widget;
-
-            container.forall ((child) => {
-                debug ("Child: %s", child.name);
-                set_light (child);
-            });
-        }
     }
 }
