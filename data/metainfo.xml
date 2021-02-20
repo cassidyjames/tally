@@ -30,6 +30,16 @@
     <control>touch</control>
   </recommends>
   <releases>
+    <release version="1.2.0" date="2021-02-19">
+      <description>
+        <ul>
+          <li>Fresh look with a purple headerbar and rounded corners on all platforms</li>
+          <li>Support dark style preference on elementary OS 6</li>
+          <li>More consistent animations</li>
+          <li>Visual style and libraries updated to elementary OS 6 versions</li>
+        </ul>
+      </description>
+    </release>
     <release version="1.1.1" date="2021-02-19">
       <description>
         <p>Save and restore state when closed and opened</p>
@@ -43,7 +53,22 @@
   </releases>
   <screenshots>
     <screenshot type="default">
-      <image>https://raw.githubusercontent.com/cassidyjames/plausible/master/data/screenshot.png</image>
+      <image>https://raw.githubusercontent.com/cassidyjames/plausible/master/data/screenshots/dashbard-dark.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/cassidyjames/plausible/master/data/screenshots/dashbard-light.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/cassidyjames/plausible/master/data/screenshots/sites-dark.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/cassidyjames/plausible/master/data/screenshots/sites-light.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/cassidyjames/plausible/master/data/screenshots/login-dark.png</image>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/cassidyjames/plausible/master/data/screenshots/login-light.png</image>
     </screenshot>
   </screenshots>
   <content_rating type="oars-1.1">

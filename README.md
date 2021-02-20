@@ -2,7 +2,7 @@
 
 Hybrid native + web app for [Plausible Analytics](https://plausible.io). Designed for elementary OS.
 
-![Screenshot](data/screenshot.png)
+![Screenshot](data/screenshots/dashboard-dark.png)
 
 Plausible is the simple privacy-friendly alternative to Google Analytics. This app wraps the Plausible web app in a native UI, integrating better with desktop operating systems like elementary OS. Native features include:
 
