@@ -30,6 +30,11 @@
     <control>touch</control>
   </recommends>
   <releases>
+    <release version="1.2.1" date="2021-03-11">
+      <description>
+        <p>Fix metainfo and Flatpak build</p>
+      </description>
+    </release>
     <release version="1.2.0" date="2021-02-19">
       <description>
         <ul>
