@@ -27,13 +27,14 @@ modules:
     sources:
       - type: git
         url: https://github.com/elementary/granite.git
-        commit: 1e36f82d0b32d7d7cc7eb3ceda7b46ba143f775c
+        tag: 6.0.0
+        commit: e6212b8e55bb35b14b1ebcb199ae2978b518a7f9
   - name: elementary-stylesheet
     buildsystem: meson
     sources:
       - type: git
         url: https://github.com/elementary/stylesheet.git
-        commit: f0c3b7fa54e58a80480c99848faf2444dfa97750
+        commit: 19c0b70efece1ce20f8881ebae53bd0d7c0ac253
     modules:
       - name: sassc
         cleanup:
@@ -65,7 +66,7 @@ modules:
     sources:
       - type: git
         url: https://github.com/elementary/icons.git
-        commit: f0979c982e8f2fc290dfa37b5c14edd25032d9b5
+        commit: 9e7ace3d6c1d1e3b5ea64012a371e46039bf044a
     modules:
       - name: xcursorgen
         cleanup:
