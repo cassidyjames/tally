@@ -1,6 +1,6 @@
 @define-color accent_color @color_primary;
 @define-color colorPrimary @color_primary;
-@define-color plausible_dark #1A202C;
+@define-color plausible_dark #191E38;
 
 .loading {
   background-color: @plausible_dark;
