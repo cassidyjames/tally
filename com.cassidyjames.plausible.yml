@@ -1,8 +1,8 @@
 app-id: com.cassidyjames.plausible
 runtime: org.gnome.Platform
-runtime-version: '3.38'
+runtime-version: '41'
 base: io.elementary.BaseApp
-base-version: 'juno-20.08'
+base-version: 'juno-21.08'
 sdk: org.gnome.Sdk
 command: com.cassidyjames.plausible
 finish-args:
@@ -10,15 +10,14 @@ finish-args:
   - --socket=fallback-x11
   - --share=network
   - --device=dri
-  # needed for perfers-color-scheme
-  - --system-talk-name=org.freedesktop.Accounts
 modules:
   - name: handy
     buildsystem: meson
     sources:
       - type: git
         url: https://gitlab.gnome.org/GNOME/libhandy.git
-        tag: '1.0.0'
+        tag: '1.5.0'
+        commit: 8fa8306a79215fc6ebf2483145da98bf9b2495ab
   - name: granite
     buildsystem: meson
     cleanup:
@@ -27,14 +26,15 @@ modules:
     sources:
       - type: git
         url: https://github.com/elementary/granite.git
-        tag: 6.0.0
-        commit: e6212b8e55bb35b14b1ebcb199ae2978b518a7f9
+        tag: 6.2.0
+        commit: 4ab145c28bb3db6372fe519e8bd79c645edfcda3
   - name: elementary-stylesheet
     buildsystem: meson
     sources:
       - type: git
+        tag: 6.1.1
         url: https://github.com/elementary/stylesheet.git
-        commit: 19c0b70efece1ce20f8881ebae53bd0d7c0ac253
+        commit: d590af0633bb1a311fee3756fcd7b5fdafa9c491
     modules:
       - name: sassc
         cleanup:
@@ -42,7 +42,8 @@ modules:
         sources:
           - type: git
             url: https://github.com/sass/sassc.git
-            tag: 3.6.1
+            tag: 3.6.2
+            commit: 66f0ef37e7f0ad3a65d2f481eff09d09408f42d0
           - type: script
             dest-filename: autogen.sh
             commands:
@@ -54,7 +55,8 @@ modules:
             sources:
               - type: git
                 url: https://github.com/sass/libsass.git
-                tag: 3.6.4
+                tag: 3.6.5
+                commit: f6afdbb9288d20d1257122e71d88e53348a53af3
               - type: script
                 dest-filename: autogen.sh
                 commands:
@@ -66,7 +68,8 @@ modules:
     sources:
       - type: git
         url: https://github.com/elementary/icons.git
-        commit: 9e7ace3d6c1d1e3b5ea64012a371e46039bf044a
+        tag: 6.1.0
+        commit: c6cf4636ea0de92c3512242dbf4ec6fb33456b13
     modules:
       - name: xcursorgen
         cleanup:
