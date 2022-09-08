@@ -1,6 +1,6 @@
 app-id: com.cassidyjames.plausible
 runtime: org.gnome.Platform
-runtime-version: '41'
+runtime-version: '42'
 base: io.elementary.BaseApp
 base-version: 'juno-21.08'
 sdk: org.gnome.Sdk
