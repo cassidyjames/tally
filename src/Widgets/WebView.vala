@@ -22,7 +22,8 @@
 public class Plausible.WebView : WebKit.WebView {
     public WebView () {
         Object (
-            expand: true,
+            hexpand: true,
+            vexpand: true,
             user_content_manager: new WebKit.UserContentManager ()
         );
     }
@@ -50,6 +51,10 @@ public class Plausible.WebView : WebKit.WebView {
             body > :not(main):not(form) {
               display: none;
             }
+
+            main {
+              margin-top: -2em;
+            }
             """,
             WebKit.UserContentInjectedFrames.TOP_FRAME,
             WebKit.UserStyleLevel.AUTHOR,
@@ -63,17 +68,17 @@ public class Plausible.WebView : WebKit.WebView {
 
         context_menu.connect (on_context_menu);
 
-        button_release_event.connect ((event) => {
-            if (event.button == 8) {
-                go_back ();
-                return true;
-            } else if (event.button == 9) {
-                go_forward ();
-                return true;
-            }
+        // button_release_event.connect ((event) => {
+        //     if (event.button == 8) {
+        //         go_back ();
+        //         return true;
+        //     } else if (event.button == 9) {
+        //         go_forward ();
+        //         return true;
+        //     }
 
-            return false;
-        });
+        //     return false;
+        // });
     }
 
     private bool on_context_menu (

@@ -19,7 +19,7 @@
 * Authored by: Cassidy James Blaede <c@ssidyjam.es>
 */
 
-public class Plausible.App : Gtk.Application {
+public class Plausible.App : Adw.Application {
     public static GLib.Settings settings;
 
     public App () {
@@ -43,36 +43,36 @@ public class Plausible.App : Gtk.Application {
     }
 
     protected override void activate () {
-        var provider = new Gtk.CssProvider ();
-        provider.load_from_resource ("/com/cassidyjames/plausible/App.css");
-        Gtk.StyleContext.add_provider_for_screen (
-            Gdk.Screen.get_default (),
-            provider,
-            Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
-        );
+        // var provider = new Gtk.CssProvider ();
+        // provider.load_from_resource ("/com/cassidyjames/plausible/App.css");
+        // Gtk.StyleContext.add_provider_for_screen (
+        //     Gdk.Screen.get_default (),
+        //     provider,
+        //     Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+        // );
 
         var app_window = new MainWindow (this);
-        app_window.show_all ();
+        app_window.show ();
 
         var quit_action = new SimpleAction ("quit", null);
         add_action (quit_action);
         set_accels_for_action ("app.quit", {"<Ctrl>Q"});
 
-        var granite_settings = Granite.Settings.get_default ();
-        var gtk_settings = Gtk.Settings.get_default ();
+        // var granite_settings = Granite.Settings.get_default ();
+        // var gtk_settings = Gtk.Settings.get_default ();
 
-        gtk_settings.set_property ("gtk-icon-theme-name", "elementary");
-        gtk_settings.set_property ("gtk-theme-name", "io.elementary.stylesheet.slate");
+        // gtk_settings.set_property ("gtk-icon-theme-name", "elementary");
+        // gtk_settings.set_property ("gtk-theme-name", "io.elementary.stylesheet.slate");
 
-        gtk_settings.gtk_application_prefer_dark_theme = (
-            granite_settings.prefers_color_scheme == Granite.Settings.ColorScheme.DARK
-        );
+        // gtk_settings.gtk_application_prefer_dark_theme = (
+        //     granite_settings.prefers_color_scheme == Granite.Settings.ColorScheme.DARK
+        // );
 
-        granite_settings.notify["prefers-color-scheme"].connect (() => {
-            gtk_settings.gtk_application_prefer_dark_theme = (
-                granite_settings.prefers_color_scheme == Granite.Settings.ColorScheme.DARK
-            );
-        });
+        // granite_settings.notify["prefers-color-scheme"].connect (() => {
+        //     gtk_settings.gtk_application_prefer_dark_theme = (
+        //         granite_settings.prefers_color_scheme == Granite.Settings.ColorScheme.DARK
+        //     );
+        // });
 
         quit_action.activate.connect (() => {
             quit ();
