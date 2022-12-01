@@ -31,20 +31,13 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
     public MainWindow (Gtk.Application application) {
         Object (
             application: application,
-            // border_width: 0,
             icon_name: App.instance.application_id,
             resizable: true,
             title: "Plausible"
-            // window_position: Gtk.WindowPosition.CENTER
         );
     }
 
     construct {
-        // Gdk.RGBA rgba_purple = { 0, 0, 0, 1 };
-        // rgba_purple.parse (PURPLE);
-
-        // Granite.Widgets.Utils.set_color_primary (this, rgba_purple);
-
         var sites_button = new Gtk.Button.with_label ("Sites") {
             valign = Gtk.Align.CENTER
         };
