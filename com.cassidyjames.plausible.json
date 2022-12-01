@@ -24,8 +24,8 @@
                 {
                     "type" : "git",
                     "url" : "https://github.com/elementary/granite.git",
-                    "tag" : "7.1.0",
-                    "commit" : "d79db0b7132eca09319c3481befdf8bc241445a9"
+                    "tag" : "6.2.0",
+                    "commit" : "4ab145c28bb3db6372fe519e8bd79c645edfcda3"
                 }
             ]
         },
