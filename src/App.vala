@@ -20,7 +20,6 @@
 */
 
 public class Plausible.App : Gtk.Application {
-    public string domain = "plausible.io";
     public static GLib.Settings settings;
 
     public App () {

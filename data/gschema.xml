@@ -6,6 +6,11 @@
       <summary>Current URL</summary>
       <description>The last-viewed URL for restoring state</description>
     </key>
+    <key name="domain" type="s">
+      <default>"plausible.io"</default>
+      <summary>Plausible instance domain</summary>
+      <description>The domain name for the Plausible instance, by default plausible.io</description>
+    </key>
     <key name="window-maximized" type="b">
       <default>false</default>
       <summary>Window maximized</summary>
