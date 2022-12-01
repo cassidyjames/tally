@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Copyright 2021 Cassidy James Blaede <c@ssidyjam.es> -->
+<!-- Copyright 2021–2022 Cassidy James Blaede <c@ssidyjam.es> -->
 <component type="desktop">
   <id>com.cassidyjames.plausible</id>
   <name>Plausible</name>
@@ -9,7 +9,7 @@
   <description>
     <p>Hybrid native + web app for Plausible Analytics, the lightweight and open-source website analytics tool. This app wraps the Plausible web app in a native UI, integrating better with desktop operating systems. Native features include:</p>
     <ul>
-      <li>Icon in your Applications Menu, Dock, etc.</li>
+      <li>Icon in your App Grid, Applications Menu, Dash, Dock, etc.</li>
       <li>Native header bar with buttons for account settings and logging out</li>
       <li>Save and restore current view, size, and position when closed and opened</li>
       <li>Two-finger swipe to go back/forward between views</li>
@@ -30,6 +30,11 @@
     <control>touch</control>
   </recommends>
   <releases>
+    <release version="1.2.3" date="2022-11-30">
+      <description>
+        <p>Under-the-hood update to prepare for custom domains</p>
+      </description>
+    </release>
     <release version="1.2.2" date="2021-03-24">
       <description>
         <p>Fix background color of loading screen</p>
