@@ -1,5 +1,5 @@
 /*
-* Copyright © 2020–2021 Cassidy James Blaede (https://cassidyjames.com)
+* Copyright © 2020–2022 Cassidy James Blaede (https://cassidyjames.com)
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public
@@ -20,7 +20,6 @@
 */
 
 public class Plausible.App : Gtk.Application {
-    public string domain = "plausible.io";
     public static GLib.Settings settings;
 
     public App () {

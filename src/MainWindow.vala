@@ -1,5 +1,5 @@
 /*
-* Copyright © 2020–2021 Cassidy James Blaede (https://cassidyjames.com)
+* Copyright © 2020–2022 Cassidy James Blaede (https://cassidyjames.com)
 *
 * This program is free software; you can redistribute it and/or
 * modify it under the terms of the GNU General Public
@@ -89,11 +89,12 @@ public class Plausible.MainWindow : Hdy.Window {
 
         web_view = new Plausible.WebView ();
 
+        string domain = App.settings.get_string ("domain");
         string current_url = App.settings.get_string ("current-url");
         if (current_url != "") {
             web_view.load_uri (current_url);
         } else {
-            web_view.load_uri ("https://" + App.instance.domain + "/sites");
+            web_view.load_uri ("https://" + domain + "/sites");
         }
 
         var logo = new Gtk.Image.from_resource ("/com/cassidyjames/plausible/logo-dark.png") {
@@ -140,17 +141,17 @@ public class Plausible.MainWindow : Hdy.Window {
         });
 
         sites_button.clicked.connect (() => {
-            web_view.load_uri ("https://" + App.instance.domain + "/sites");
+            web_view.load_uri ("https://" + domain + "/sites");
         });
 
         account_button.clicked.connect (() => {
-            web_view.load_uri ("https://" + App.instance.domain + "/settings");
+            web_view.load_uri ("https://" + domain + "/settings");
         });
 
         logout_button.clicked.connect (() => {
             // NOTE: Plausible expects a POST not just loading the URL
             // https://github.com/plausible/analytics/issues/730
-            // web_view.load_uri ("https://" + App.instance.domain + "/logout");
+            // web_view.load_uri ("https://" + domain + "/logout");
 
             web_view.get_website_data_manager ().clear.begin (
                 WebKit.WebsiteDataTypes.COOKIES,
@@ -158,7 +159,7 @@ public class Plausible.MainWindow : Hdy.Window {
                 null,
                 () => {
                     debug ("Cleared cookies; going home.");
-                    web_view.load_uri ("https://" + App.instance.domain + "/sites");
+                    web_view.load_uri ("https://" + domain + "/sites");
                 }
             );
         });
@@ -245,20 +246,21 @@ public class Plausible.MainWindow : Hdy.Window {
     private void on_loading () {
         // Only do anything once we're done loading
         if (! web_view.is_loading) {
+            string domain = App.settings.get_string ("domain");
             sites_revealer.reveal_child = (
-                web_view.uri != "https://" + App.instance.domain + "/login" &&
-                web_view.uri != "https://" + App.instance.domain + "/register" &&
-                web_view.uri != "https://" + App.instance.domain + "/password/request-reset" &&
-                web_view.uri != "https://" + App.instance.domain + "/sites"
+                web_view.uri != "https://" + domain + "/login" &&
+                web_view.uri != "https://" + domain + "/register" &&
+                web_view.uri != "https://" + domain + "/password/request-reset" &&
+                web_view.uri != "https://" + domain + "/sites"
             );
 
             account_revealer.reveal_child = (
-                web_view.uri != "https://" + App.instance.domain + "/login" &&
-                web_view.uri != "https://" + App.instance.domain + "/register" &&
-                web_view.uri != "https://" + App.instance.domain + "/password/request-reset"
+                web_view.uri != "https://" + domain + "/login" &&
+                web_view.uri != "https://" + domain + "/register" &&
+                web_view.uri != "https://" + domain + "/password/request-reset"
             );
 
-            if (web_view.uri == "https://" + App.instance.domain + "/settings") {
+            if (web_view.uri == "https://" + domain + "/settings") {
                 account_stack.visible_child_name = "logout";
             } else {
                 account_stack.visible_child_name = "account";
