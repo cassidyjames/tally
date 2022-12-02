@@ -26,16 +26,12 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
     private Gtk.Revealer sites_revealer;
     private uint configure_id;
 
-    // private const string PURPLE = "#5850ec";
-
     public MainWindow (Gtk.Application application) {
         Object (
             application: application,
             icon_name: App.instance.application_id,
             resizable: true,
-            title: "Plausible",
-            default_width: 1000,
-            default_height: 600
+            title: "Plausible"
         );
     }
 
@@ -90,6 +86,7 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
 
         var status_page = new Adw.StatusPage () {
             title = "Plausible",
+            /// TRANSLATORS: the string is the domain name, e.g. plausible.io
             description = _("Loading the <b>%s</b> dashboard…").printf (domain),
             icon_name = "icon"
         };
@@ -111,20 +108,20 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
 
         set_content (grid);
 
-        int window_x, window_y;
         int window_width, window_height;
-        App.settings.get ("window-position", "(ii)", out window_x, out window_y);
         App.settings.get ("window-size", "(ii)", out window_width, out window_height);
 
-        // if (window_x != -1 || window_y != -1) {
-        //     move (window_x, window_y);
-        // }
-
-        // resize (window_width, window_height);
+        set_default_size (window_width, window_height);
 
         if (App.settings.get_boolean ("window-maximized")) {
             maximize ();
         }
+
+        close_request.connect (() => {
+            save_window_state ();
+            return Gdk.EVENT_PROPAGATE;
+        });
+        notify["maximized"].connect (save_window_state);
 
         web_view.load_changed.connect ((load_event) => {
             if (load_event == WebKit.LoadEvent.FINISHED) {
@@ -208,32 +205,18 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
     //     add_accel_group (accel_group);
     }
 
-    // public override bool configure_event (Gdk.EventConfigure event) {
-    //     if (configure_id == 0) {
-    //         /* Avoid spamming the settings */
-    //         configure_id = Timeout.add (200, () => {
-    //             configure_id = 0;
-
-    //             if (is_maximized) {
-    //                 App.settings.set_boolean ("window-maximized", true);
-    //             } else {
-    //                 App.settings.set_boolean ("window-maximized", false);
-
-    //                 int width, height;
-    //                 get_size (out width, out height);
-    //                 App.settings.set ("window-size", "(ii)", width, height);
-
-    //                 int root_x, root_y;
-    //                 get_position (out root_x, out root_y);
-    //                 App.settings.set ("window-position", "(ii)", root_x, root_y);
-    //             }
-
-    //             return GLib.Source.REMOVE;
-    //         });
-    //     }
-
-    //     return base.configure_event (event);
-    // }
+    private void save_window_state () {
+        if (maximized) {
+            App.settings.set_boolean ("window-maximized", true);
+        } else {
+            App.settings.set_boolean ("window-maximized", false);
+            App.settings.set (
+                "window-size", "(ii)",
+                get_size (Gtk.Orientation.HORIZONTAL),
+                get_size (Gtk.Orientation.VERTICAL)
+            );
+        }
+    }
 
     private void on_loading () {
         // Only do anything once we're done loading
