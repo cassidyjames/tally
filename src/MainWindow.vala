@@ -8,7 +8,6 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
     private Gtk.Revealer account_revealer;
     private Gtk.Stack account_stack;
     private Gtk.Revealer sites_revealer;
-    private uint configure_id;
 
     public MainWindow (Gtk.Application application) {
         Object (
@@ -143,50 +142,6 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
         web_view.notify["is-loading"].connect (on_loading);
 
         App.settings.bind ("zoom", web_view, "zoom-level", SettingsBindFlags.DEFAULT);
-
-    //     var accel_group = new Gtk.AccelGroup ();
-
-    //     accel_group.connect (
-    //         Gdk.Key.plus,
-    //         Gdk.ModifierType.CONTROL_MASK,
-    //         Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
-    //         () => {
-    //             zoom_in ();
-    //             return true;
-    //         }
-    //     );
-
-    //     accel_group.connect (
-    //         Gdk.Key.equal,
-    //         Gdk.ModifierType.CONTROL_MASK,
-    //         Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
-    //         () => {
-    //             zoom_in ();
-    //             return true;
-    //         }
-    //     );
-
-    //     accel_group.connect (
-    //         Gdk.Key.minus,
-    //         Gdk.ModifierType.CONTROL_MASK,
-    //         Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
-    //         () => {
-    //             zoom_out ();
-    //             return true;
-    //         }
-    //     );
-
-    //     accel_group.connect (
-    //         Gdk.Key.@0,
-    //         Gdk.ModifierType.CONTROL_MASK,
-    //         Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
-    //         () => {
-    //             zoom_default ();
-    //             return true;
-    //         }
-    //     );
-
-    //     add_accel_group (accel_group);
     }
 
     private void save_window_state () {
