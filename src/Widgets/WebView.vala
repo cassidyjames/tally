@@ -37,7 +37,7 @@ public class Plausible.WebView : WebKit.WebView {
             }
 
             main {
-              margin-top: -2em;
+              margin-top: -1.5em;
             }
             """,
             WebKit.UserContentInjectedFrames.TOP_FRAME,
