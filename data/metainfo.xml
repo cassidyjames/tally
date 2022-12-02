@@ -21,7 +21,7 @@
       <li>Set the scaling with Ctrl+Plus/Minus or Ctrl+0 to reset</li>
       <li>Slimmed down web app UI (no header or footer with external links)</li>
     </ul>
-    <p>Coming soon:</p>
+    <p>Features coming soon:</p>
     <ul>
       <li>Custom domain support (e.g. self-hosted, not on plausible.io)</li>
       <li>Support for opening external links</li>
@@ -37,7 +37,7 @@
     <control>touch</control>
   </recommends>
   <releases>
-    <release version="2.0.0" date="2022-12-02">
+    <release version="2.0.1" date="2022-12-02">
       <description>
         <p>Hello, GNOME</p>
         <ul>
