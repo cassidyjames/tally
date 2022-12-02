@@ -1,7 +1,7 @@
 project(
     'com.cassidyjames.plausible',
     'vala', 'c',
-    version: '1.2.3'
+    version: '2.0.0'
 )
 
 gnome = import('gnome')
@@ -22,10 +22,10 @@ executable(
     join_paths('src', 'Widgets', 'WebView.vala'),
     asresources,
     dependencies: [
-        dependency('granite', version: '>= 6.2.0'),
-        dependency('gtk+-3.0', version: '>= 3.24'),
-        dependency('libhandy-1', version: '>= 1.5.0'),
-        dependency('webkit2gtk-4.0', version: '>= 2.30'),
+        dependency('glib-2.0'),
+        dependency('gtk4'),
+        dependency('libadwaita-1'),
+        dependency('webkit2gtk-5.0'),
     ],
     install: true
 )

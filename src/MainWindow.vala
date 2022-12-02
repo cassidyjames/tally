@@ -1,89 +1,57 @@
 /*
-* Copyright © 2020–2022 Cassidy James Blaede (https://cassidyjames.com)
-*
-* This program is free software; you can redistribute it and/or
-* modify it under the terms of the GNU General Public
-* License as published by the Free Software Foundation; either
-* version 3 of the License, or (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-* General Public License for more details.
-*
-* You should have received a copy of the GNU General Public
-* License along with this program; if not, write to the
-* Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-* Boston, MA 02110-1301 USA
-*
-* Authored by: Cassidy James Blaede <c@ssidyjam.es>
-*/
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ * SPDX-FileCopyrightText: 2020–2022 Cassidy James Blaede <c@ssidyjam.es>
+ */
 
-public class Plausible.MainWindow : Hdy.Window {
+public class Plausible.MainWindow : Adw.ApplicationWindow {
     private Plausible.WebView web_view;
     private Gtk.Revealer account_revealer;
     private Gtk.Stack account_stack;
     private Gtk.Revealer sites_revealer;
-    private uint configure_id;
-
-    private const string PURPLE = "#5850ec";
 
     public MainWindow (Gtk.Application application) {
         Object (
             application: application,
-            border_width: 0,
             icon_name: App.instance.application_id,
             resizable: true,
-            title: "Plausible",
-            window_position: Gtk.WindowPosition.CENTER
+            title: "Plausible"
         );
     }
 
     construct {
-        Hdy.init ();
-
-        Gdk.RGBA rgba_purple = { 0, 0, 0, 1 };
-        rgba_purple.parse (PURPLE);
-
-        Granite.Widgets.Utils.set_color_primary (this, rgba_purple);
-
         var sites_button = new Gtk.Button.with_label ("Sites") {
             valign = Gtk.Align.CENTER
         };
         sites_button.get_style_context ().add_class ("back-button");
 
         sites_revealer = new Gtk.Revealer () {
-            transition_duration = Granite.TRANSITION_DURATION_CLOSE,
+            transition_duration = 200,
             transition_type = Gtk.RevealerTransitionType.SLIDE_RIGHT
         };
-        sites_revealer.add (sites_button);
+        sites_revealer.child = sites_button;
 
-        var account_button = new Gtk.Button.from_icon_name ("avatar-default", Gtk.IconSize.LARGE_TOOLBAR) {
+        var account_button = new Gtk.Button.from_icon_name ("avatar-default") {
             tooltip_text = "Account Settings"
         };
 
-        var logout_button = new Gtk.Button.from_icon_name ("system-log-out", Gtk.IconSize.LARGE_TOOLBAR) {
+        var logout_button = new Gtk.Button.from_icon_name ("system-log-out") {
             tooltip_text = "Log Out"
         };
 
         account_stack = new Gtk.Stack () {
-            transition_duration = Granite.TRANSITION_DURATION_CLOSE,
+            transition_duration = 200,
             transition_type = Gtk.StackTransitionType.CROSSFADE
         };
         account_stack.add_named (account_button, "account");
         account_stack.add_named (logout_button, "logout");
 
         account_revealer = new Gtk.Revealer () {
-            transition_duration = Granite.TRANSITION_DURATION_CLOSE,
+            transition_duration = 200,
             transition_type = Gtk.RevealerTransitionType.CROSSFADE
         };
-        account_revealer.add (account_stack);
+        account_revealer.child = account_stack;
 
-        var header = new Hdy.HeaderBar () {
-            has_subtitle = false,
-            show_close_button = true,
-            title = "Plausible"
-        };
+        var header = new Adw.HeaderBar ();
         header.pack_start (sites_revealer);
         header.pack_end (account_revealer);
 
@@ -97,42 +65,44 @@ public class Plausible.MainWindow : Hdy.Window {
             web_view.load_uri ("https://" + domain + "/sites");
         }
 
-        var logo = new Gtk.Image.from_resource ("/com/cassidyjames/plausible/logo-dark.png") {
-            expand = true,
-            margin_bottom = 48
+        var status_page = new Adw.StatusPage () {
+            title = "Plausible",
+            /// TRANSLATORS: the string is the domain name, e.g. plausible.io
+            description = _("Loading the <b>%s</b> dashboard…").printf (domain),
+            icon_name = "icon"
         };
 
         var stack = new Gtk.Stack () {
             // Half speed since it's such a huge distance
-            transition_duration = Granite.TRANSITION_DURATION_CLOSE * 2,
+            transition_duration = 400,
             transition_type = Gtk.StackTransitionType.UNDER_UP
         };
         stack.get_style_context ().add_class ("loading");
-        stack.add_named (logo, "loading");
+        stack.add_named (status_page, "loading");
         stack.add_named (web_view, "web");
 
         var grid = new Gtk.Grid () {
             orientation = Gtk.Orientation.VERTICAL
         };
-        grid.add (header);
-        grid.add (stack);
+        grid.attach (header, 0, 0);
+        grid.attach (stack, 0, 1);
 
-        add (grid);
+        set_content (grid);
 
-        int window_x, window_y;
         int window_width, window_height;
-        App.settings.get ("window-position", "(ii)", out window_x, out window_y);
         App.settings.get ("window-size", "(ii)", out window_width, out window_height);
 
-        if (window_x != -1 || window_y != -1) {
-            move (window_x, window_y);
-        }
-
-        resize (window_width, window_height);
+        set_default_size (window_width, window_height);
 
         if (App.settings.get_boolean ("window-maximized")) {
             maximize ();
         }
+
+        close_request.connect (() => {
+            save_window_state ();
+            return Gdk.EVENT_PROPAGATE;
+        });
+        notify["maximized"].connect (save_window_state);
 
         web_view.load_changed.connect ((load_event) => {
             if (load_event == WebKit.LoadEvent.FINISHED) {
@@ -170,77 +140,19 @@ public class Plausible.MainWindow : Hdy.Window {
         web_view.notify["is-loading"].connect (on_loading);
 
         App.settings.bind ("zoom", web_view, "zoom-level", SettingsBindFlags.DEFAULT);
-
-        var accel_group = new Gtk.AccelGroup ();
-
-        accel_group.connect (
-            Gdk.Key.plus,
-            Gdk.ModifierType.CONTROL_MASK,
-            Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
-            () => {
-                zoom_in ();
-                return true;
-            }
-        );
-
-        accel_group.connect (
-            Gdk.Key.equal,
-            Gdk.ModifierType.CONTROL_MASK,
-            Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
-            () => {
-                zoom_in ();
-                return true;
-            }
-        );
-
-        accel_group.connect (
-            Gdk.Key.minus,
-            Gdk.ModifierType.CONTROL_MASK,
-            Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
-            () => {
-                zoom_out ();
-                return true;
-            }
-        );
-
-        accel_group.connect (
-            Gdk.Key.@0,
-            Gdk.ModifierType.CONTROL_MASK,
-            Gtk.AccelFlags.VISIBLE | Gtk.AccelFlags.LOCKED,
-            () => {
-                zoom_default ();
-                return true;
-            }
-        );
-
-        add_accel_group (accel_group);
     }
 
-    public override bool configure_event (Gdk.EventConfigure event) {
-        if (configure_id == 0) {
-            /* Avoid spamming the settings */
-            configure_id = Timeout.add (200, () => {
-                configure_id = 0;
-
-                if (is_maximized) {
-                    App.settings.set_boolean ("window-maximized", true);
-                } else {
-                    App.settings.set_boolean ("window-maximized", false);
-
-                    int width, height;
-                    get_size (out width, out height);
-                    App.settings.set ("window-size", "(ii)", width, height);
-
-                    int root_x, root_y;
-                    get_position (out root_x, out root_y);
-                    App.settings.set ("window-position", "(ii)", root_x, root_y);
-                }
-
-                return GLib.Source.REMOVE;
-            });
+    private void save_window_state () {
+        if (maximized) {
+            App.settings.set_boolean ("window-maximized", true);
+        } else {
+            App.settings.set_boolean ("window-maximized", false);
+            App.settings.set (
+                "window-size", "(ii)",
+                get_size (Gtk.Orientation.HORIZONTAL),
+                get_size (Gtk.Orientation.VERTICAL)
+            );
         }
-
-        return base.configure_event (event);
     }
 
     private void on_loading () {
@@ -270,31 +182,34 @@ public class Plausible.MainWindow : Hdy.Window {
         }
     }
 
-    private void zoom_in () {
+    public void zoom_in () {
         if (web_view.zoom_level < 5.0) {
             web_view.zoom_level = web_view.zoom_level + 0.1;
         } else {
-            Gdk.beep ();
+            Gdk.Display.get_default ().beep ();
+            warning ("Zoom already max");
         }
 
         return;
     }
 
-    private void zoom_out () {
+    public void zoom_out () {
         if (web_view.zoom_level > 0.2) {
             web_view.zoom_level = web_view.zoom_level - 0.1;
         } else {
-            Gdk.beep ();
+            Gdk.Display.get_default ().beep ();
+            warning ("Zoom already min");
         }
 
         return;
     }
 
-    private void zoom_default () {
+    public void zoom_default () {
         if (web_view.zoom_level != 1.0) {
             web_view.zoom_level = 1.0;
         } else {
-            Gdk.beep ();
+            Gdk.Display.get_default ().beep ();
+            warning ("Zoom already default");
         }
 
         return;

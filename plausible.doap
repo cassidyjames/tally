@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Project
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xmlns:foaf="http://xmlns.com/foaf/0.1/"
+  xmlns:gnome="http://api.gnome.org/doap-extensions#"
+  xmlns="http://usefulinc.com/ns/doap#"
+>
+  <name>Plausible</name>
+  <shortdesc xml:lang="en">Simple and privacy-friendly alternative to Google Analytics</shortdesc>
+  <description xml:lang="en">Hybrid native + web app for Plausible Analytics, the lightweight and open-source website analytics tool. This app wraps the Plausible web app in a native UI, integrating better with desktop operating systems.</description>
+  <category rdf:resource="http://api.gnome.org/doap-extensions#apps" />
+
+  <homepage rdf:resource="https://cassidyjames.com/" />
+  <download-page rdf:resource="https://flathub.org/apps/details/com.cassidyjames.plausible" />
+  <bug-database rdf:resource="https://github.com/cassidyjames/plausible/issues" />
+
+  <programming-language>Vala</programming-language>
+
+  <maintainer>
+    <foaf:Person>
+      <foaf:name>Cassidy James Blaede</foaf:name>
+      <foaf:mbox rdf:resource="mailto:c@ssidyjam.es" />
+      <gnome:userid>cassidyjames</gnome:userid>
+    </foaf:Person>
+  </maintainer>
+</Project>

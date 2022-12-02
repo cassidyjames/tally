@@ -1,0 +1,12 @@
+@define-color plausible #5850ec;
+@define-color plausible_alt #6875f5;
+@define-color plausible_bg #f9fafb;
+
+@define-color headerbar_bg_color @plausible;
+@define-color headerbar_fg_color #ffffff;
+@define-color headerbar_border_color #ffffff;
+@define-color headerbar_backdrop_color @plausible_alt;
+
+.loading {
+  background-color: @plausible_bg;
+}
