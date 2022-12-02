@@ -19,6 +19,8 @@ Other features:
 - Zoom in/out with Ctrl+Plus/Minus, and it's remembered the next time you use the app
 - Slimmed down web app UI (no header or footer with external links)
 
+<a href='https://flathub.org/apps/details/com.cassidyjames.plausible'><img width='180' alt='Download on Flathub' src='https://flathub.org/assets/badges/flathub-badge-en.svg' /></a>
+
 ## Developing and Building
 
 How to build Plausible is currently undergoing a rework; for now, I recommend using GNOME Builder with default settings to build the Flatpak.
