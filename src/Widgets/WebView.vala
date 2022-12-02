@@ -52,17 +52,17 @@ public class Plausible.WebView : WebKit.WebView {
 
         context_menu.connect (on_context_menu);
 
-        // button_release_event.connect ((event) => {
-        //     if (event.button == 8) {
-        //         go_back ();
-        //         return true;
-        //     } else if (event.button == 9) {
-        //         go_forward ();
-        //         return true;
-        //     }
+        var back_click_gesture = new Gtk.GestureClick () {
+            button = 8
+        };
+        back_click_gesture.pressed.connect (go_back);
+        add_controller (back_click_gesture);
 
-        //     return false;
-        // });
+        var forward_click_gesture = new Gtk.GestureClick () {
+            button = 9
+        };
+        forward_click_gesture.pressed.connect (go_forward);
+        add_controller (forward_click_gesture);
     }
 
     private bool on_context_menu (
