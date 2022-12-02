@@ -3,6 +3,8 @@
   <gresource prefix="/com/cassidyjames/plausible">
     <file>style.css</file>
     <file>style-dark.css</file>
-    <file alias="logo-dark.png">logo-dark.png</file>
+  </gresource>
+  <gresource prefix="/com/cassidyjames/plausible/icons/scalable/actions/">
+    <file alias="icon.png">icon.png</file>
   </gresource>
 </gresources>

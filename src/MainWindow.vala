@@ -33,7 +33,9 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
             application: application,
             icon_name: App.instance.application_id,
             resizable: true,
-            title: "Plausible"
+            title: "Plausible",
+            default_width: 1000,
+            default_height: 600
         );
     }
 
@@ -86,9 +88,10 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
             web_view.load_uri ("https://" + domain + "/sites");
         }
 
-        var logo = new Gtk.Image.from_resource ("/com/cassidyjames/plausible/logo-dark.png") {
-            // expand = true,
-            margin_bottom = 48
+        var status_page = new Adw.StatusPage () {
+            title = "Plausible",
+            description = _("Loading the <b>%s</b> dashboard…").printf (domain),
+            icon_name = "icon"
         };
 
         var stack = new Gtk.Stack () {
@@ -97,7 +100,7 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
             transition_type = Gtk.StackTransitionType.UNDER_UP
         };
         stack.get_style_context ().add_class ("loading");
-        stack.add_named (logo, "loading");
+        stack.add_named (status_page, "loading");
         stack.add_named (web_view, "web");
 
         var grid = new Gtk.Grid () {
