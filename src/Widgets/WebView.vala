@@ -32,7 +32,8 @@ public class Plausible.WebView : WebKit.WebView {
         // if the Plausible web app used a semantic footer instead of a div
         var custom_css = new WebKit.UserStyleSheet (
             """
-            body > :not(main):not(form) {
+            nav,
+            main + * {
               display: none;
             }
 
