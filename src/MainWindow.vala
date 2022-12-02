@@ -51,9 +51,7 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
         };
         account_revealer.child = account_stack;
 
-        var header = new Adw.HeaderBar () {
-            title_widget = new Gtk.Label ("Plausible")
-        };
+        var header = new Adw.HeaderBar ();
         header.pack_start (sites_revealer);
         header.pack_end (account_revealer);
 
