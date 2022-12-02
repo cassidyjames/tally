@@ -1,3 +1,6 @@
+[![Flathub](https://img.shields.io/flathub/v/com.cassidyjames.plausible?logo=flathub&logoColor=white&style=for-the-badge)][flathub]
+[![Installs](https://img.shields.io/flathub/downloads/com.cassidyjames.plausible?label=Installs&logo=flathub&logoColor=white&style=for-the-badge)][flathub]
+
 # Plausible
 
 Hybrid native + web app for [Plausible Analytics](https://plausible.io).
@@ -19,3 +22,5 @@ Other features:
 ## Developing and Building
 
 How to build Plausible is currently undergoing a rework; for now, I recommend using GNOME Builder with default settings to build the Flatpak.
+
+[flathub]: https://flathub.org/apps/details/com.cassidyjames.plausible
