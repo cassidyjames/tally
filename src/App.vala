@@ -58,3 +58,4 @@ public class Plausible.App : Adw.Application {
         return app.run (args);
     }
 }
+

@@ -4,6 +4,10 @@
  */
 
 public class Plausible.MainWindow : Adw.ApplicationWindow {
+    private const GLib.ActionEntry[] ACTION_ENTRIES = {
+        { "about", on_about_activate },
+    };
+
     private Plausible.WebView web_view;
     private Gtk.Revealer account_revealer;
     private Gtk.Stack account_stack;
@@ -14,8 +18,10 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
             application: application,
             icon_name: App.instance.application_id,
             resizable: true,
-            title: "Plausible"
+            title: "Plausible",
+            width_request: 360
         );
+        add_action_entries (ACTION_ENTRIES, this);
     }
 
     construct {
@@ -51,8 +57,21 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
         };
         account_revealer.child = account_stack;
 
+        var menu = new Menu ();
+        // TODO: Move the above buttons to the menu model and nuke the revealer
+        // menu.append ("Account Settings", "account_settings");
+        // menu.append ("Log Out", "log_out");
+        menu.append ("About", "win.about");
+
+        var menu_button = new Gtk.MenuButton () {
+            icon_name = "open-menu-symbolic",
+            menu_model = menu,
+            tooltip_text = _("Menu"),
+        };
+
         var header = new Adw.HeaderBar ();
         header.pack_start (sites_revealer);
+        header.pack_end (menu_button);
         header.pack_end (account_revealer);
 
         web_view = new Plausible.WebView ();
@@ -213,5 +232,21 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
         }
 
         return;
+    }
+
+    private void on_about_activate () {
+        var about = new Adw.AboutWindow () {
+            transient_for = this,
+            application_name = "Plausible",
+            application_icon = "com.cassidyjames.plausible",
+            developer_name = "Cassidy James Blaede",
+            version = "2.1.0",
+            copyright = "2020–2022 Cassidy James Blaede",
+            developers = {"Cassidy James Blaede"},
+            issue_url = "https://github.com/cassidyjames/plausible/issues",
+            license_type = Gtk.License.GPL_3_0,
+        };
+
+        about.present ();
     }
 }

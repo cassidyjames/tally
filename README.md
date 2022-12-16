@@ -26,3 +26,4 @@ Other features:
 How to build Plausible is currently undergoing a rework; for now, I recommend using GNOME Builder with default settings to build the Flatpak.
 
 [flathub]: https://flathub.org/apps/details/com.cassidyjames.plausible
+
