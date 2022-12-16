@@ -37,6 +37,11 @@
     <control>touch</control>
   </recommends>
   <releases>
+    <release version="2.0.2" date="2022-12-02">
+      <description>
+        <p>Fixed the dashboard hover tooltip</p>
+      </description>
+    </release>
     <release version="2.0.1" date="2022-12-02">
       <description>
         <p>Hello, GNOME</p>
