@@ -295,7 +295,7 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
             // FIXME: this should be dynamic; it's too easy to miss
             version = "2.1.0",
             copyright = "Copyright © 2020–2022 Cassidy James Blaede",
-            developers = {"Cassidy James Blaede"},
+            developers = {"Cassidy James Blaede https://cassidyjames.com"},
             issue_url = "https://github.com/cassidyjames/plausible/issues",
             license_type = Gtk.License.GPL_3_0,
         };
