@@ -87,7 +87,7 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
         }
 
         var status_page = new Adw.StatusPage () {
-            title = "Plausible",
+            title = _("%s for Plausible").printf (App.NAME),
             /// TRANSLATORS: the string is the domain name, e.g. plausible.io
             description = _("Loading the <b>%s</b> dashboard…").printf (domain),
             icon_name = "icon"
@@ -297,7 +297,7 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
 
             comments = _("Tally is a hybrid native + web app for Plausible Analytics, the lightweight and open-source website analytics tool."),
 
-            website = "https://cassidyjames.com",
+            website = App.URL,
             issue_url = "https://github.com/cassidyjames/plausible/issues",
 
             // Credits
@@ -312,6 +312,7 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
             license_type = Gtk.License.GPL_3_0,
         };
         about_window.add_link (_("About Plausible Analytics"), "https://plausible.io/about");
+        about_window.add_link (_("Plausible Analytics Privacy Policy"), "https://plausible.io/privacy");
         about_window.add_legal_section ("Plausible Analytics", null, Gtk.License.CUSTOM, """Plausible Analytics is a product of:
 
 Plausible Insights OÜ
