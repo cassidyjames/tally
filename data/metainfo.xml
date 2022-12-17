@@ -37,6 +37,11 @@
     <control>touch</control>
   </recommends>
   <releases>
+    <release version="2.1.0" date="2022-12-16">
+      <description>
+        <p>Custom domain support! Find the option in the new settings menu to use a self-hosted Plausible instance.</p>
+      </description>
+    </release>
     <release version="2.0.2" date="2022-12-02">
       <description>
         <p>Fixed the dashboard hover tooltip</p>

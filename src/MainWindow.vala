@@ -4,6 +4,11 @@
  */
 
 public class Plausible.MainWindow : Adw.ApplicationWindow {
+    private const GLib.ActionEntry[] ACTION_ENTRIES = {
+        { "custom_domain", on_custom_domain_activate },
+        { "about", on_about_activate },
+    };
+
     private Plausible.WebView web_view;
     private Gtk.Revealer account_revealer;
     private Gtk.Stack account_stack;
@@ -14,8 +19,10 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
             application: application,
             icon_name: App.instance.application_id,
             resizable: true,
-            title: "Plausible"
+            title: "Plausible",
+            width_request: 360
         );
+        add_action_entries (ACTION_ENTRIES, this);
     }
 
     construct {
@@ -51,8 +58,22 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
         };
         account_revealer.child = account_stack;
 
+        var menu = new Menu ();
+        // TODO: Move the above buttons to the menu model and nuke the revealer
+        // menu.append ("Account Settings", "account_settings");
+        // menu.append ("Log Out", "log_out");
+        menu.append (_("Custom Domain…"), "win.custom_domain");
+        menu.append (_("About"), "win.about");
+
+        var menu_button = new Gtk.MenuButton () {
+            icon_name = "open-menu-symbolic",
+            menu_model = menu,
+            tooltip_text = _("Menu"),
+        };
+
         var header = new Adw.HeaderBar ();
         header.pack_start (sites_revealer);
+        header.pack_end (menu_button);
         header.pack_end (account_revealer);
 
         web_view = new Plausible.WebView ();
@@ -111,11 +132,11 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
         });
 
         sites_button.clicked.connect (() => {
-            web_view.load_uri ("https://" + domain + "/sites");
+            web_view.load_uri ("https://" + App.settings.get_string ("domain") + "/sites");
         });
 
         account_button.clicked.connect (() => {
-            web_view.load_uri ("https://" + domain + "/settings");
+            web_view.load_uri ("https://" + App.settings.get_string ("domain") + "/settings");
         });
 
         logout_button.clicked.connect (() => {
@@ -129,7 +150,7 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
                 null,
                 () => {
                     debug ("Cleared cookies; going home.");
-                    web_view.load_uri ("https://" + domain + "/sites");
+                    web_view.load_uri ("https://" + App.settings.get_string ("domain") + "/sites");
                 }
             );
         });
@@ -213,5 +234,72 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
         }
 
         return;
+    }
+
+    private void on_custom_domain_activate () {
+        string domain = App.settings.get_string ("domain");
+        string default_domain = App.settings.get_default_value ("domain").get_string ();
+
+        var domain_label = new Gtk.Label ("https://");
+        domain_label.add_css_class ("dim-label");
+
+        var domain_entry = new Gtk.Entry.with_buffer (new Gtk.EntryBuffer ((uint8[]) domain)) {
+            activates_default = true,
+            hexpand = true,
+            placeholder_text = default_domain
+        };
+
+        var domain_grid = new Gtk.Grid ();
+        domain_grid.attach (domain_label, 0, 0);
+        domain_grid.attach (domain_entry, 1, 0);
+
+        var domain_dialog = new Adw.MessageDialog (
+            this,
+            "Set a Custom Domain",
+            "If you’re self-hosting Plausible or using an instance other than <b>%s</b>, set the domain name here.".printf (domain)
+        ) {
+            body_use_markup = true,
+            default_response = "save",
+            extra_child = domain_grid,
+        };
+        domain_dialog.add_response ("close", "Cancel");
+        domain_dialog.add_response ("save", _("Set Domain"));
+        domain_dialog.set_response_appearance ("save", Adw.ResponseAppearance.SUGGESTED);
+
+        domain_dialog.present ();
+
+        domain_dialog.response.connect ((response_id) => {
+            if (response_id == "save") {
+                string new_domain = domain_entry.buffer.text;
+
+                if (new_domain == "") {
+                    new_domain = default_domain;
+                }
+
+                // FIXME: There's currently no validation of the domain; maybe
+                // try to load the domain/sites, and if it succeeds, enable the
+                // save button?
+
+                App.settings.set_string ("domain", new_domain);
+                web_view.load_uri ("https://" + new_domain + "/sites");
+            }
+        });
+    }
+
+    private void on_about_activate () {
+        var about_window = new Adw.AboutWindow () {
+            transient_for = this,
+            application_name = "Plausible",
+            application_icon = "com.cassidyjames.plausible",
+            developer_name = "Cassidy James Blaede",
+            // FIXME: this should be dynamic; it's too easy to miss
+            version = "2.1.0",
+            copyright = "Copyright © 2020–2022 Cassidy James Blaede",
+            developers = {"Cassidy James Blaede"},
+            issue_url = "https://github.com/cassidyjames/plausible/issues",
+            license_type = Gtk.License.GPL_3_0,
+        };
+
+        about_window.present ();
     }
 }
