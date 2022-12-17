@@ -63,7 +63,7 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
         // menu.append ("Account Settings", "account_settings");
         // menu.append ("Log Out", "log_out");
         menu.append (_("Custom Domain…"), "win.custom_domain");
-        menu.append (_("About"), "win.about");
+        menu.append (_("About Plausible"), "win.about");
 
         var menu_button = new Gtk.MenuButton () {
             icon_name = "open-menu-symbolic",
