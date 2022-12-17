@@ -5,6 +5,7 @@
 
 public class Plausible.MainWindow : Adw.ApplicationWindow {
     private const GLib.ActionEntry[] ACTION_ENTRIES = {
+        { "domain", on_domain_activate },
         { "about", on_about_activate },
     };
 
@@ -61,7 +62,8 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
         // TODO: Move the above buttons to the menu model and nuke the revealer
         // menu.append ("Account Settings", "account_settings");
         // menu.append ("Log Out", "log_out");
-        menu.append ("About", "win.about");
+        menu.append (_("Custom Domain…"), "win.domain");
+        menu.append (_("About"), "win.about");
 
         var menu_button = new Gtk.MenuButton () {
             icon_name = "open-menu-symbolic",
@@ -232,6 +234,35 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
         }
 
         return;
+    }
+
+    private void on_domain_activate () {
+        var domain_label = new Gtk.Label ("https://");
+        domain_label.add_css_class ("dim-label");
+
+        var domain_entry = new Gtk.Entry () {
+            hexpand = true,
+            placeholder_text = "plausible.io"
+        };
+
+        var domain_grid = new Gtk.Grid ();
+        domain_grid.attach (domain_label, 0, 0);
+        domain_grid.attach (domain_entry, 1, 0);
+
+        var domain_dialog = new Adw.MessageDialog (
+            this,
+            "Set a Custom Domain",
+            "If you’re self-hosting Plausible or using an instance other than <b>plausible.io</b>, set the domain name here."
+        ) {
+            body_use_markup = true,
+            default_response = "save",
+            extra_child = domain_grid,
+        };
+        domain_dialog.add_response ("close", "Cancel");
+        domain_dialog.add_response ("save", _("Set Domain"));
+        domain_dialog.set_response_appearance ("save", Adw.ResponseAppearance.SUGGESTED);
+
+        domain_dialog.present ();
     }
 
     private void on_about_activate () {
