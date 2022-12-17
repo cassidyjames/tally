@@ -292,6 +292,7 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
             application_name = "Plausible",
             application_icon = "com.cassidyjames.plausible",
             developer_name = "Cassidy James Blaede",
+            // FIXME: this should be dynamic; it's too easy to miss
             version = "2.1.0",
             copyright = "Copyright © 2020–2022 Cassidy James Blaede",
             developers = {"Cassidy James Blaede"},
