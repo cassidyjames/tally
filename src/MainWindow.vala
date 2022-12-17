@@ -312,6 +312,15 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
             license_type = Gtk.License.GPL_3_0,
         };
         about_window.add_link (_("About Plausible Analytics"), "https://plausible.io/about");
+        about_window.add_legal_section ("Plausible Analytics", null, Gtk.License.CUSTOM, """Plausible Analytics is a product of:
+
+Plausible Insights OÜ
+Västriku tn 2, 50403, Tartu, Estonia
+Registration number 14709274
+
+Represented by Uku Täht
+Email: hello@plausible.io
+""");
 
         about_window.present ();
     }

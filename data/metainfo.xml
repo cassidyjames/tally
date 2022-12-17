@@ -32,20 +32,18 @@
   </provides>
   <launchable type="desktop-id">com.cassidyjames.plausible.desktop</launchable>
   <recommends>
+    <display_length compare="ge">360</display_length>
+  </recommends>
+  <supports>
     <control>pointing</control>
     <control>keyboard</control>
     <control>touch</control>
-  </recommends>
+  </supports>
   <releases>
-    <release version="3.0.0" date="2022-12-16">
+    <release version="3.0.0" date="2022-12-17">
       <description>
         <p>Say hello to Tally for Plausible: new name, same great app</p>
-        <p>
-          This nifty Plausible app is now known as Tally for Plausible to better
-          distinguish itself from the Plausible project and service. It's the
-          same app with the same features and the same goals, just a shiny new
-          name.
-        </p>
+        <p>This nifty Plausible app is now known as Tally for Plausible to better distinguish itself from the Plausible project and service. It's the same app with the same features and the same goals, just a shiny new name.</p>
       </description>
     </release>
     <release version="2.1.0" date="2022-12-16">
