@@ -289,7 +289,7 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
             application_icon = "com.cassidyjames.plausible",
             developer_name = "Cassidy James Blaede",
             version = "2.1.0",
-            copyright = "2020–2022 Cassidy James Blaede",
+            copyright = "Copyright © 2020–2022 Cassidy James Blaede",
             developers = {"Cassidy James Blaede"},
             issue_url = "https://github.com/cassidyjames/plausible/issues",
             license_type = Gtk.License.GPL_3_0,
