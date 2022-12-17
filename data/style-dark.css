@@ -1,2 +1,7 @@
 @define-color plausible_alt #4338ca;
 @define-color plausible_bg #1a202c;
+
+@define-color accent_color #6875f5;
+@define-color window_bg_color @plausible_bg;
+@define-color dialog_bg_color @plausible_bg;
+@define-color popover_bg_color @plausible_bg;
