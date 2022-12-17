@@ -276,6 +276,10 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
                     new_domain = default_domain;
                 }
 
+                // FIXME: There's currently no validation of the domain; maybe
+                // try to load the domain/sites, and if it succeeds, enable the
+                // save button?
+
                 App.settings.set_string ("domain", new_domain);
                 web_view.load_uri ("https://" + new_domain + "/sites");
             }
