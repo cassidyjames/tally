@@ -17,9 +17,9 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
     public MainWindow (Gtk.Application application) {
         Object (
             application: application,
-            icon_name: App.instance.application_id,
+            icon_name: APP_ID,
             resizable: true,
-            title: "Plausible",
+            title: App.NAME,
             width_request: 360
         );
         add_action_entries (ACTION_ENTRIES, this);
@@ -63,7 +63,7 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
         // menu.append ("Account Settings", "account_settings");
         // menu.append ("Log Out", "log_out");
         menu.append (_("Custom Domain…"), "win.custom_domain");
-        menu.append (_("About"), "win.about");
+        menu.append (_("About %s").printf (App.NAME), "win.about");
 
         var menu_button = new Gtk.MenuButton () {
             icon_name = "open-menu-symbolic",
@@ -289,16 +289,29 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
     private void on_about_activate () {
         var about_window = new Adw.AboutWindow () {
             transient_for = this,
-            application_name = "Plausible",
-            application_icon = "com.cassidyjames.plausible",
-            developer_name = "Cassidy James Blaede",
-            // FIXME: this should be dynamic; it's too easy to miss
-            version = "2.1.0",
-            copyright = "Copyright © 2020–2022 Cassidy James Blaede",
-            developers = {"Cassidy James Blaede"},
+
+            application_icon = APP_ID,
+            application_name = _("%s for Plausible").printf (App.NAME),
+            developer_name = App.DEVELOPER,
+            version = VERSION,
+
+            comments = _("Tally is a hybrid native + web app for Plausible Analytics, the lightweight and open-source website analytics tool."),
+
+            website = "https://cassidyjames.com",
             issue_url = "https://github.com/cassidyjames/plausible/issues",
+
+            // Credits
+            developers = { "%s <%s>".printf (App.DEVELOPER, App.EMAIL) },
+            designers = { "%s %s".printf (App.DEVELOPER, App.URL) },
+
+            /// The translator credits. Please translate this with your name(s).
+            translator_credits = _("translator-credits"),
+
+            // Legal
+            copyright = "Copyright © 2020–2022 %s".printf (App.DEVELOPER),
             license_type = Gtk.License.GPL_3_0,
         };
+        about_window.add_link (_("About Plausible Analytics"), "https://plausible.io/about");
 
         about_window.present ();
     }

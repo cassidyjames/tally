@@ -2,12 +2,12 @@
 <!-- Copyright 2021–2022 Cassidy James Blaede <c@ssidyjam.es> -->
 <component type="desktop">
   <id>com.cassidyjames.plausible</id>
-  <name>Plausible</name>
+  <name>Tally for Plausible</name>
   <summary>Simple and privacy-friendly alternative to Google Analytics</summary>
   <metadata_license>CC-BY-SA-4.0</metadata_license>
   <project_license>GPL-3.0-or-later</project_license>
   <description>
-    <p>Hybrid native + web app for Plausible Analytics, the lightweight and open-source website analytics tool. This app wraps the Plausible web app in a native UI, integrating better with desktop operating systems. Native features include:</p>
+    <p>Hybrid native + web app for Plausible Analytics, the lightweight and open-source website analytics tool. Tally wraps the Plausible web app in a native UI, integrating better with desktop operating systems. Native features include:</p>
     <ul>
       <li>Icon in your App Grid, Applications Menu, Dash, Dock, etc.</li>
       <li>Native header bar with buttons for account settings and logging out</li>
@@ -20,10 +20,10 @@
       <li>Pinch-to-zoom</li>
       <li>Set the scaling with Ctrl+Plus/Minus or Ctrl+0 to reset</li>
       <li>Slimmed down web app UI (no header or footer with external links)</li>
+      <li>Custom domain support (e.g. self-hosted, not on plausible.io)</li>
     </ul>
     <p>Features coming soon:</p>
     <ul>
-      <li>Custom domain support (e.g. self-hosted, not on plausible.io)</li>
       <li>Support for opening external links</li>
     </ul>
   </description>
@@ -37,6 +37,17 @@
     <control>touch</control>
   </recommends>
   <releases>
+    <release version="3.0.0" date="2022-12-16">
+      <description>
+        <p>Say hello to Tally for Plausible: new name, same great app</p>
+        <p>
+          This nifty Plausible app is now known as Tally for Plausible to better
+          distinguish itself from the Plausible project and service. It's the
+          same app with the same features and the same goals, just a shiny new
+          name.
+        </p>
+      </description>
+    </release>
     <release version="2.1.0" date="2022-12-16">
       <description>
         <p>Custom domain support! Find the option in the new settings menu to use a self-hosted Plausible instance.</p>

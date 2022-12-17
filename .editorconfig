@@ -1,7 +1,6 @@
 # EditorConfig <http://EditorConfig.org>
 root = true
 
-# elementary defaults
 [*]
 charset = utf-8
 end_of_line = lf
@@ -9,7 +8,7 @@ indent_size = tab
 indent_style = space
 insert_final_newline = true
 max_line_length = 80
-tab_width = 4
-
-[{*.xml,*.xml.in,*.yml,*.yaml,*.css}]
 tab_width = 2
+
+[*.vala]
+tab_width = 4
