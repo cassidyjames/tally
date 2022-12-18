@@ -38,6 +38,7 @@ executable(
     dependency('gtk4'),
     dependency('libadwaita-1'),
     dependency('webkit2gtk-5.0'),
+    meson.get_compiler('vala').find_library('posix'),
   ],
   install: true
 )

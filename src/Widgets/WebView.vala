@@ -86,10 +86,11 @@ public class Plausible.WebView : WebKit.WebView {
         Gdk.Event event,
         WebKit.HitTestResult hit_test_result
     ) {
-        // Disable context menu
-        // TODO: only disable when not running from Terminal
-        // https://github.com/cassidyjames/plausible/issues/11
-        return true;
-        // return false;
+        // Only when launched from console/TTY/terminal
+        if (Posix.isatty (Posix.STDIN_FILENO)) {
+            return Gdk.EVENT_PROPAGATE;
+        }
+
+        return !Gdk.EVENT_PROPAGATE;
     }
 }
