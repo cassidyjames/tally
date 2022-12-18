@@ -43,7 +43,14 @@
     <release version="3.0.0" date="2022-12-17">
       <description>
         <p>Say hello to Tally for Plausible: new name, same great app</p>
-        <p>This nifty Plausible app is now known as Tally for Plausible to better distinguish itself from the Plausible project and service. It's the same app with the same features and the same goals, just a shiny new name.</p>
+        <p>This nifty Plausible app is now known as Tally for Plausible to better distinguish it from Plausible Analytics itself. Also in this release:</p>
+        <ul>
+          <li>Account settings and logging out are now accessed from the menu instead of their own icon on the header bar</li>
+          <li>A slightly refreshed look and feel that is more accessible and blurs the lines even further between web and native app</li>
+          <li>Added a confirmation dialog for logging out</li>
+          <li>More information added to the About window</li>
+          <li>Feeling adventurous? The web inspector and developer tools are accessible when Tally is run from a terminal</li>
+        </ul>
       </description>
     </release>
     <release version="2.1.0" date="2022-12-16">
