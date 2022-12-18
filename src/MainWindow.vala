@@ -12,8 +12,6 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
     };
 
     private Plausible.WebView web_view;
-    private Gtk.Revealer account_revealer;
-    private Gtk.Stack account_stack;
     private Gtk.Revealer sites_revealer;
 
     public MainWindow (Gtk.Application application) {
@@ -39,26 +37,26 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
         };
         sites_revealer.child = sites_button;
 
-        var account_button = new Gtk.Button.from_icon_name ("avatar-default") {
-            tooltip_text = "Account Settings"
-        };
+        // var account_button = new Gtk.Button.from_icon_name ("avatar-default") {
+        //     tooltip_text = "Account Settings"
+        // };
 
-        var logout_button = new Gtk.Button.from_icon_name ("system-log-out") {
-            tooltip_text = "Log Out"
-        };
+        // var logout_button = new Gtk.Button.from_icon_name ("system-log-out") {
+        //     tooltip_text = "Log Out"
+        // };
 
-        account_stack = new Gtk.Stack () {
-            transition_duration = 200,
-            transition_type = Gtk.StackTransitionType.CROSSFADE
-        };
-        account_stack.add_named (account_button, "account");
-        account_stack.add_named (logout_button, "logout");
+        // account_stack = new Gtk.Stack () {
+        //     transition_duration = 200,
+        //     transition_type = Gtk.StackTransitionType.CROSSFADE
+        // };
+        // account_stack.add_named (account_button, "account");
+        // account_stack.add_named (logout_button, "logout");
 
-        account_revealer = new Gtk.Revealer () {
-            transition_duration = 200,
-            transition_type = Gtk.RevealerTransitionType.CROSSFADE
-        };
-        account_revealer.child = account_stack;
+        // account_revealer = new Gtk.Revealer () {
+        //     transition_duration = 200,
+        //     transition_type = Gtk.RevealerTransitionType.CROSSFADE
+        // };
+        // account_revealer.child = account_stack;
 
         var site_menu = new Menu ();
         site_menu.append (_("Account Settings"), "win.account_settings");
@@ -81,7 +79,7 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
         var header = new Adw.HeaderBar ();
         header.pack_start (sites_revealer);
         header.pack_end (menu_button);
-        header.pack_end (account_revealer);
+        // header.pack_end (account_revealer);
 
         web_view = new Plausible.WebView ();
 
@@ -142,13 +140,13 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
             web_view.load_uri ("https://" + App.settings.get_string ("domain") + "/sites");
         });
 
-        account_button.clicked.connect (() => {
-            web_view.load_uri ("https://" + App.settings.get_string ("domain") + "/settings");
-        });
+        // account_button.clicked.connect (() => {
+        //     web_view.load_uri ("https://" + App.settings.get_string ("domain") + "/settings");
+        // });
 
-        logout_button.clicked.connect (() => {
-            web_view.load_uri ("https://" + App.settings.get_string ("domain") + "/logout");
-        });
+        // logout_button.clicked.connect (() => {
+        //     web_view.load_uri ("https://" + App.settings.get_string ("domain") + "/logout");
+        // });
 
         web_view.load_changed.connect (on_loading);
         web_view.notify["uri"].connect (on_loading);
@@ -185,16 +183,16 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
                 web_view.uri != "https://" + domain + "/sites"
             );
 
-            account_revealer.reveal_child = (
-                web_view.uri != "https://" + domain + "/login" &&
-                web_view.uri != "https://" + domain + "/register" &&
-                web_view.uri != "https://" + domain + "/password/request-reset"
-            );
+            // account_revealer.reveal_child = (
+            //     web_view.uri != "https://" + domain + "/login" &&
+            //     web_view.uri != "https://" + domain + "/register" &&
+            //     web_view.uri != "https://" + domain + "/password/request-reset"
+            // );
 
             if (web_view.uri == "https://" + domain + "/settings") {
-                account_stack.visible_child_name = "logout";
+                // account_stack.visible_child_name = "logout";
             } else {
-                account_stack.visible_child_name = "account";
+                // account_stack.visible_child_name = "account";
             }
 
             App.settings.set_string ("current-url", web_view.uri);
@@ -235,7 +233,7 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
     }
 
     private void on_account_settings_activate () {
-        // FIXME: Stub
+        web_view.load_uri ("https://" + App.settings.get_string ("domain") + "/settings");
     }
 
     private void on_custom_domain_activate () {
@@ -289,7 +287,8 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
     }
 
     private void on_log_out_activate () {
-        // FIXME: Stub
+        // FIXME: Confirmation dialog?
+        web_view.load_uri ("https://" + App.settings.get_string ("domain") + "/logout");
     }
 
     private void on_about_activate () {
