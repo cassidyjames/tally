@@ -265,7 +265,7 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
         var log_out_dialog = new Adw.MessageDialog (
             this,
             "Log out of Plausible?",
-            "You will need to re-enter your username and password for <b>%s</b> to log back in.".printf (domain)
+            "You will need to re-enter your email and password for <b>%s</b> to log back in.".printf (domain)
         ) {
             body_use_markup = true,
             default_response = "log_out"
