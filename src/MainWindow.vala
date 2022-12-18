@@ -37,30 +37,9 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
         };
         sites_revealer.child = sites_button;
 
-        // var account_button = new Gtk.Button.from_icon_name ("avatar-default") {
-        //     tooltip_text = "Account Settings"
-        // };
-
-        // var logout_button = new Gtk.Button.from_icon_name ("system-log-out") {
-        //     tooltip_text = "Log Out"
-        // };
-
-        // account_stack = new Gtk.Stack () {
-        //     transition_duration = 200,
-        //     transition_type = Gtk.StackTransitionType.CROSSFADE
-        // };
-        // account_stack.add_named (account_button, "account");
-        // account_stack.add_named (logout_button, "logout");
-
-        // account_revealer = new Gtk.Revealer () {
-        //     transition_duration = 200,
-        //     transition_type = Gtk.RevealerTransitionType.CROSSFADE
-        // };
-        // account_revealer.child = account_stack;
-
         var site_menu = new Menu ();
         site_menu.append (_("Account Settings"), "win.account_settings");
-        site_menu.append (_("Log Out"), "win.log_out");
+        site_menu.append (_("Log Out…"), "win.log_out");
 
         var app_menu = new Menu ();
         app_menu.append (_("Custom Domain…"), "win.custom_domain");
@@ -140,14 +119,6 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
             web_view.load_uri ("https://" + App.settings.get_string ("domain") + "/sites");
         });
 
-        // account_button.clicked.connect (() => {
-        //     web_view.load_uri ("https://" + App.settings.get_string ("domain") + "/settings");
-        // });
-
-        // logout_button.clicked.connect (() => {
-        //     web_view.load_uri ("https://" + App.settings.get_string ("domain") + "/logout");
-        // });
-
         web_view.load_changed.connect (on_loading);
         web_view.notify["uri"].connect (on_loading);
         web_view.notify["estimated-load-progress"].connect (on_loading);
@@ -170,7 +141,6 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
     }
 
     private void on_loading () {
-        // Only do anything once we're done loading
         if (web_view.is_loading) {
             // TODO: Add a loading progress bar or spinner somewhere?
         } else {
@@ -183,17 +153,20 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
                 web_view.uri != "https://" + domain + "/sites"
             );
 
+            // TODO: Figure out how to disable the relevant actions when on
+            // these URIs.
+            //
             // account_revealer.reveal_child = (
             //     web_view.uri != "https://" + domain + "/login" &&
             //     web_view.uri != "https://" + domain + "/register" &&
             //     web_view.uri != "https://" + domain + "/password/request-reset"
             // );
-
-            if (web_view.uri == "https://" + domain + "/settings") {
-                // account_stack.visible_child_name = "logout";
-            } else {
-                // account_stack.visible_child_name = "account";
-            }
+            //
+            // if (web_view.uri == "https://" + domain + "/settings") {
+            //     account_stack.visible_child_name = "logout";
+            // } else {
+            //     account_stack.visible_child_name = "account";
+            // }
 
             App.settings.set_string ("current-url", web_view.uri);
         }
@@ -287,8 +260,38 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
     }
 
     private void on_log_out_activate () {
-        // FIXME: Confirmation dialog?
-        web_view.load_uri ("https://" + App.settings.get_string ("domain") + "/logout");
+        string domain = App.settings.get_string ("domain");
+
+        var log_out_dialog = new Adw.MessageDialog (
+            this,
+            "Log out of Plausible?",
+            "You will need to re-enter your username and password for <b>%s</b> to log back in.".printf (domain)
+        ) {
+            body_use_markup = true,
+            default_response = "log_out"
+        };
+        log_out_dialog.add_response ("close", "Stay Logged In");
+        log_out_dialog.add_response ("log_out", _("Log Out"));
+        log_out_dialog.set_response_appearance ("log_out", Adw.ResponseAppearance.DESTRUCTIVE);
+
+        log_out_dialog.present ();
+
+        log_out_dialog.response.connect ((response_id) => {
+            if (response_id == "log_out") {
+                // NOTE: Since https://github.com/plausible/analytics/issues/730 was
+                // resolved, you would think loading /logout would be sufficient;
+                // however, that redirects you to the home page which feels weird.
+                // Instead, we clear cookies then load /sites, which will prompt for
+                // login before showing the dashboard once again.
+
+                web_view.get_website_data_manager ().clear.begin (
+                    WebKit.WebsiteDataTypes.COOKIES, 0, null, () => {
+                        debug ("Cleared cookies; going home.");
+                        web_view.load_uri ("https://" + domain + "/sites");
+                    }
+                );
+            }
+        });
     }
 
     private void on_about_activate () {
@@ -318,7 +321,8 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
         };
         about_window.add_link (_("About Plausible Analytics"), "https://plausible.io/about");
         about_window.add_link (_("Plausible Analytics Privacy Policy"), "https://plausible.io/privacy");
-        about_window.add_legal_section ("Plausible Analytics", null, Gtk.License.CUSTOM, """Plausible Analytics is a product of:
+        about_window.add_legal_section ("Plausible Analytics", null, Gtk.License.CUSTOM,
+"""Plausible Analytics is a product of:
 
 Plausible Insights OÜ
 Västriku tn 2, 50403, Tartu, Estonia
@@ -326,7 +330,8 @@ Registration number 14709274
 
 Represented by Uku Täht
 Email: hello@plausible.io
-""");
+"""
+        );
 
         about_window.present ();
     }
