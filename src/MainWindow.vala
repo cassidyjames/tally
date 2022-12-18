@@ -5,7 +5,9 @@
 
 public class Plausible.MainWindow : Adw.ApplicationWindow {
     private const GLib.ActionEntry[] ACTION_ENTRIES = {
+        { "account_settings", on_account_settings_activate },
         { "custom_domain", on_custom_domain_activate },
+        { "log_out", on_log_out_activate },
         { "about", on_about_activate },
     };
 
@@ -58,12 +60,17 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
         };
         account_revealer.child = account_stack;
 
+        var site_menu = new Menu ();
+        site_menu.append (_("Account Settings"), "win.account_settings");
+        site_menu.append (_("Log Out"), "win.log_out");
+
+        var app_menu = new Menu ();
+        app_menu.append (_("Custom Domain…"), "win.custom_domain");
+        app_menu.append (_("About %s").printf (App.NAME), "win.about");
+
         var menu = new Menu ();
-        // TODO: Move the above buttons to the menu model and nuke the revealer
-        // menu.append ("Account Settings", "account_settings");
-        // menu.append ("Log Out", "log_out");
-        menu.append (_("Custom Domain…"), "win.custom_domain");
-        menu.append (_("About %s").printf (App.NAME), "win.about");
+        menu.append_section (null, site_menu);
+        menu.append_section (null, app_menu);
 
         var menu_button = new Gtk.MenuButton () {
             icon_name = "open-menu-symbolic",
@@ -140,19 +147,7 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
         });
 
         logout_button.clicked.connect (() => {
-            // NOTE: Plausible expects a POST not just loading the URL
-            // https://github.com/plausible/analytics/issues/730
-            // web_view.load_uri ("https://" + domain + "/logout");
-
-            web_view.get_website_data_manager ().clear.begin (
-                WebKit.WebsiteDataTypes.COOKIES,
-                0,
-                null,
-                () => {
-                    debug ("Cleared cookies; going home.");
-                    web_view.load_uri ("https://" + App.settings.get_string ("domain") + "/sites");
-                }
-            );
+            web_view.load_uri ("https://" + App.settings.get_string ("domain") + "/logout");
         });
 
         web_view.load_changed.connect (on_loading);
@@ -178,8 +173,11 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
 
     private void on_loading () {
         // Only do anything once we're done loading
-        if (! web_view.is_loading) {
+        if (web_view.is_loading) {
+            // TODO: Add a loading progress bar or spinner somewhere?
+        } else {
             string domain = App.settings.get_string ("domain");
+
             sites_revealer.reveal_child = (
                 web_view.uri != "https://" + domain + "/login" &&
                 web_view.uri != "https://" + domain + "/register" &&
@@ -236,6 +234,10 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
         return;
     }
 
+    private void on_account_settings_activate () {
+        // FIXME: Stub
+    }
+
     private void on_custom_domain_activate () {
         string domain = App.settings.get_string ("domain");
         string default_domain = App.settings.get_default_value ("domain").get_string ();
@@ -284,6 +286,10 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
                 web_view.load_uri ("https://" + new_domain + "/sites");
             }
         });
+    }
+
+    private void on_log_out_activate () {
+        // FIXME: Stub
     }
 
     private void on_about_activate () {
