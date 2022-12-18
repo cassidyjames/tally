@@ -91,9 +91,9 @@
       <description>
         <ul>
           <li>Fresh look with a purple headerbar and rounded corners on all platforms</li>
-          <li>Support dark style preference on elementary OS 6</li>
+          <li>Support dark style preference</li>
           <li>More consistent animations</li>
-          <li>Visual style and libraries updated to elementary OS 6 versions</li>
+          <li>Visual style and libraries updated</li>
         </ul>
       </description>
     </release>
@@ -110,22 +110,22 @@
   </releases>
   <screenshots>
     <screenshot type="default">
-      <image>https://raw.githubusercontent.com/cassidyjames/plausible/master/data/screenshots/dashboard-dark.png</image>
+      <image>https://raw.githubusercontent.com/cassidyjames/tally/main/data/screenshots/dashboard-dark.png</image>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/cassidyjames/plausible/master/data/screenshots/dashboard-light.png</image>
+      <image>https://raw.githubusercontent.com/cassidyjames/tally/main/data/screenshots/dashboard-light.png</image>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/cassidyjames/plausible/master/data/screenshots/sites-dark.png</image>
+      <image>https://raw.githubusercontent.com/cassidyjames/tally/main/data/screenshots/sites-dark.png</image>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/cassidyjames/plausible/master/data/screenshots/sites-light.png</image>
+      <image>https://raw.githubusercontent.com/cassidyjames/tally/main/data/screenshots/sites-light.png</image>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/cassidyjames/plausible/master/data/screenshots/login-dark.png</image>
+      <image>https://raw.githubusercontent.com/cassidyjames/tally/main/data/screenshots/login-dark.png</image>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/cassidyjames/plausible/master/data/screenshots/login-light.png</image>
+      <image>https://raw.githubusercontent.com/cassidyjames/tally/main/data/screenshots/login-light.png</image>
     </screenshot>
   </screenshots>
   <content_rating type="oars-1.1">
@@ -133,10 +133,13 @@
   </content_rating>
   <developer_name>Cassidy James Blaede</developer_name>
   <url type="homepage">https://cassidyjames.com</url>
-  <url type="bugtracker">https://github.com/cassidyjames/plausible/issues</url>
+  <url type="bugtracker">https://github.com/cassidyjames/tally/issues</url>
   <url type="donation">https://cassidyjames.com/pay</url>
   <url type="help">https://cassidyjames.com/support</url>
   <!--url type="contact">https://cassidyjames.com/support</url-->
+  <branding>
+    <color type="primary">#5850EC</color>
+  </branding>
   <custom>
     <value key="x-appcenter-color-primary">#5850EC</value>
     <value key="x-appcenter-color-primary-text">#fff</value>
