@@ -13,7 +13,7 @@
     ],
     "modules" : [
         {
-            "name" : "plausible",
+            "name" : "tally",
             "buildsystem" : "meson",
             "sources" : [
                 {
