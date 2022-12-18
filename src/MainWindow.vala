@@ -5,21 +5,21 @@
 
 public class Plausible.MainWindow : Adw.ApplicationWindow {
     private const GLib.ActionEntry[] ACTION_ENTRIES = {
+        { "account_settings", on_account_settings_activate },
         { "custom_domain", on_custom_domain_activate },
+        { "log_out", on_log_out_activate },
         { "about", on_about_activate },
     };
 
     private Plausible.WebView web_view;
-    private Gtk.Revealer account_revealer;
-    private Gtk.Stack account_stack;
     private Gtk.Revealer sites_revealer;
 
     public MainWindow (Gtk.Application application) {
         Object (
             application: application,
-            icon_name: App.instance.application_id,
+            icon_name: APP_ID,
             resizable: true,
-            title: "Plausible",
+            title: App.NAME,
             width_request: 360
         );
         add_action_entries (ACTION_ENTRIES, this);
@@ -37,33 +37,17 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
         };
         sites_revealer.child = sites_button;
 
-        var account_button = new Gtk.Button.from_icon_name ("avatar-default") {
-            tooltip_text = "Account Settings"
-        };
+        var site_menu = new Menu ();
+        site_menu.append (_("Account Settings"), "win.account_settings");
+        site_menu.append (_("Log Out…"), "win.log_out");
 
-        var logout_button = new Gtk.Button.from_icon_name ("system-log-out") {
-            tooltip_text = "Log Out"
-        };
-
-        account_stack = new Gtk.Stack () {
-            transition_duration = 200,
-            transition_type = Gtk.StackTransitionType.CROSSFADE
-        };
-        account_stack.add_named (account_button, "account");
-        account_stack.add_named (logout_button, "logout");
-
-        account_revealer = new Gtk.Revealer () {
-            transition_duration = 200,
-            transition_type = Gtk.RevealerTransitionType.CROSSFADE
-        };
-        account_revealer.child = account_stack;
+        var app_menu = new Menu ();
+        app_menu.append (_("Custom Domain…"), "win.custom_domain");
+        app_menu.append (_("About %s").printf (App.NAME), "win.about");
 
         var menu = new Menu ();
-        // TODO: Move the above buttons to the menu model and nuke the revealer
-        // menu.append ("Account Settings", "account_settings");
-        // menu.append ("Log Out", "log_out");
-        menu.append (_("Custom Domain…"), "win.custom_domain");
-        menu.append (_("About"), "win.about");
+        menu.append_section (null, site_menu);
+        menu.append_section (null, app_menu);
 
         var menu_button = new Gtk.MenuButton () {
             icon_name = "open-menu-symbolic",
@@ -74,7 +58,7 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
         var header = new Adw.HeaderBar ();
         header.pack_start (sites_revealer);
         header.pack_end (menu_button);
-        header.pack_end (account_revealer);
+        // header.pack_end (account_revealer);
 
         web_view = new Plausible.WebView ();
 
@@ -87,7 +71,7 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
         }
 
         var status_page = new Adw.StatusPage () {
-            title = "Plausible",
+            title = _("%s for Plausible").printf (App.NAME),
             /// TRANSLATORS: the string is the domain name, e.g. plausible.io
             description = _("Loading the <b>%s</b> dashboard…").printf (domain),
             icon_name = "icon"
@@ -135,26 +119,6 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
             web_view.load_uri ("https://" + App.settings.get_string ("domain") + "/sites");
         });
 
-        account_button.clicked.connect (() => {
-            web_view.load_uri ("https://" + App.settings.get_string ("domain") + "/settings");
-        });
-
-        logout_button.clicked.connect (() => {
-            // NOTE: Plausible expects a POST not just loading the URL
-            // https://github.com/plausible/analytics/issues/730
-            // web_view.load_uri ("https://" + domain + "/logout");
-
-            web_view.get_website_data_manager ().clear.begin (
-                WebKit.WebsiteDataTypes.COOKIES,
-                0,
-                null,
-                () => {
-                    debug ("Cleared cookies; going home.");
-                    web_view.load_uri ("https://" + App.settings.get_string ("domain") + "/sites");
-                }
-            );
-        });
-
         web_view.load_changed.connect (on_loading);
         web_view.notify["uri"].connect (on_loading);
         web_view.notify["estimated-load-progress"].connect (on_loading);
@@ -177,9 +141,11 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
     }
 
     private void on_loading () {
-        // Only do anything once we're done loading
-        if (! web_view.is_loading) {
+        if (web_view.is_loading) {
+            // TODO: Add a loading progress bar or spinner somewhere?
+        } else {
             string domain = App.settings.get_string ("domain");
+
             sites_revealer.reveal_child = (
                 web_view.uri != "https://" + domain + "/login" &&
                 web_view.uri != "https://" + domain + "/register" &&
@@ -187,17 +153,20 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
                 web_view.uri != "https://" + domain + "/sites"
             );
 
-            account_revealer.reveal_child = (
-                web_view.uri != "https://" + domain + "/login" &&
-                web_view.uri != "https://" + domain + "/register" &&
-                web_view.uri != "https://" + domain + "/password/request-reset"
-            );
-
-            if (web_view.uri == "https://" + domain + "/settings") {
-                account_stack.visible_child_name = "logout";
-            } else {
-                account_stack.visible_child_name = "account";
-            }
+            // TODO: Figure out how to disable the relevant actions when on
+            // these URIs.
+            //
+            // account_revealer.reveal_child = (
+            //     web_view.uri != "https://" + domain + "/login" &&
+            //     web_view.uri != "https://" + domain + "/register" &&
+            //     web_view.uri != "https://" + domain + "/password/request-reset"
+            // );
+            //
+            // if (web_view.uri == "https://" + domain + "/settings") {
+            //     account_stack.visible_child_name = "logout";
+            // } else {
+            //     account_stack.visible_child_name = "account";
+            // }
 
             App.settings.set_string ("current-url", web_view.uri);
         }
@@ -234,6 +203,10 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
         }
 
         return;
+    }
+
+    private void on_account_settings_activate () {
+        web_view.load_uri ("https://" + App.settings.get_string ("domain") + "/settings");
     }
 
     private void on_custom_domain_activate () {
@@ -286,19 +259,79 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
         });
     }
 
+    private void on_log_out_activate () {
+        string domain = App.settings.get_string ("domain");
+
+        var log_out_dialog = new Adw.MessageDialog (
+            this,
+            "Log out of Plausible?",
+            "You will need to re-enter your email and password for <b>%s</b> to log back in.".printf (domain)
+        ) {
+            body_use_markup = true,
+            default_response = "log_out"
+        };
+        log_out_dialog.add_response ("close", "Stay Logged In");
+        log_out_dialog.add_response ("log_out", _("Log Out"));
+        log_out_dialog.set_response_appearance ("log_out", Adw.ResponseAppearance.DESTRUCTIVE);
+
+        log_out_dialog.present ();
+
+        log_out_dialog.response.connect ((response_id) => {
+            if (response_id == "log_out") {
+                // NOTE: Since https://github.com/plausible/analytics/issues/730 was
+                // resolved, you would think loading /logout would be sufficient;
+                // however, that redirects you to the home page which feels weird.
+                // Instead, we clear cookies then load /sites, which will prompt for
+                // login before showing the dashboard once again.
+
+                web_view.get_website_data_manager ().clear.begin (
+                    WebKit.WebsiteDataTypes.COOKIES, 0, null, () => {
+                        debug ("Cleared cookies; going home.");
+                        web_view.load_uri ("https://" + domain + "/sites");
+                    }
+                );
+            }
+        });
+    }
+
     private void on_about_activate () {
         var about_window = new Adw.AboutWindow () {
             transient_for = this,
-            application_name = "Plausible",
-            application_icon = "com.cassidyjames.plausible",
-            developer_name = "Cassidy James Blaede",
-            // FIXME: this should be dynamic; it's too easy to miss
-            version = "2.1.0",
-            copyright = "Copyright © 2020–2022 Cassidy James Blaede",
-            developers = {"Cassidy James Blaede"},
+
+            application_icon = APP_ID,
+            application_name = _("%s for Plausible").printf (App.NAME),
+            developer_name = App.DEVELOPER,
+            version = VERSION,
+
+            comments = _("Tally is a hybrid native + web app for Plausible Analytics, the lightweight and open-source website analytics tool."),
+
+            website = App.URL,
             issue_url = "https://github.com/cassidyjames/plausible/issues",
+
+            // Credits
+            developers = { "%s <%s>".printf (App.DEVELOPER, App.EMAIL) },
+            designers = { "%s %s".printf (App.DEVELOPER, App.URL) },
+
+            /// The translator credits. Please translate this with your name(s).
+            translator_credits = _("translator-credits"),
+
+            // Legal
+            copyright = "Copyright © 2020–2022 %s".printf (App.DEVELOPER),
             license_type = Gtk.License.GPL_3_0,
         };
+        about_window.add_link (_("About Plausible Analytics"), "https://plausible.io/about");
+        about_window.add_link (_("Plausible Analytics Privacy Policy"), "https://plausible.io/privacy");
+        about_window.add_legal_section ("Plausible Analytics", null, Gtk.License.CUSTOM,
+"""Plausible Analytics is a product of:
+
+Plausible Insights OÜ
+Västriku tn 2, 50403, Tartu, Estonia
+Registration number 14709274
+
+Represented by Uku Täht
+Email: hello@plausible.io
+"""
+        );
 
         about_window.present ();
     }

@@ -4,11 +4,16 @@
  */
 
 public class Plausible.App : Adw.Application {
+    public const string NAME = "Tally";
+    public const string DEVELOPER = "Cassidy James Blaede";
+    public const string EMAIL = "c@ssidyjam.es";
+    public const string URL = "https://cassidyjames.com";
+
     public static GLib.Settings settings;
 
     public App () {
         Object (
-            application_id: "com.cassidyjames.plausible"
+            application_id: APP_ID
         );
     }
 

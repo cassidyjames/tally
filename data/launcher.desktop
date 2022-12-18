@@ -1,11 +1,11 @@
 [Desktop Entry]
-Name=Plausible
+Name=Tally for Plausible
 GenericName=Web Analytics
-Comment=See your Plausible.io stats
+Comment=See the stats on your Plausible dashboard
 Categories=Network;GTK;
 Exec=com.cassidyjames.plausible
 Icon=com.cassidyjames.plausible
 Terminal=false
 Type=Application
 X-GNOME-Gettext-Domain=com.github.cassidyjames.plausible
-Keywords=plausible;analytics;stats;
+Keywords=plausible;analytics;stats;metrics;counter;

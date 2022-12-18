@@ -4,6 +4,8 @@
  */
 
 public class Plausible.WebView : WebKit.WebView {
+    private bool is_terminal = false;
+
     public WebView () {
         Object (
             hexpand: true,
@@ -13,13 +15,13 @@ public class Plausible.WebView : WebKit.WebView {
     }
 
     construct {
+        is_terminal = Posix.isatty (Posix.STDIN_FILENO);
+
         var webkit_settings = new WebKit.Settings () {
             default_font_family = Gtk.Settings.get_default ().gtk_font_name,
             enable_accelerated_2d_canvas = true,
             enable_back_forward_navigation_gestures = true,
-            // TODO: only enable when running from Terminal
-            // https://github.com/cassidyjames/plausible/issues/11
-            // enable_developer_extras = true,
+            enable_developer_extras = is_terminal,
             enable_dns_prefetching = true,
             enable_html5_database = true,
             enable_html5_local_storage = true,
@@ -28,10 +30,15 @@ public class Plausible.WebView : WebKit.WebView {
             hardware_acceleration_policy = WebKit.HardwareAccelerationPolicy.ALWAYS
         };
 
-        // NOTE: Show only the main UI and login form; could be handled better
-        // if the Plausible web app used a semantic footer instead of a div
+        // NOTE: Show only the main UI and login form, plus tweak some browser
+        // default behaviors to feel more app-like.
         var custom_css = new WebKit.UserStyleSheet (
             """
+            html {
+              -webkit-user-select: none;
+              cursor: default;
+            }
+
             nav,
             main + * {
               display: none;
@@ -39,6 +46,16 @@ public class Plausible.WebView : WebKit.WebView {
 
             main {
               margin-top: -1.5em;
+            }
+
+            button,
+            [role=button],
+            .button,
+            select,
+            .cursor-pointer,
+            .cursor-pointer:hover,
+            a:not([href^="http"]) {
+              cursor: default!important;
             }
             """,
             WebKit.UserContentInjectedFrames.TOP_FRAME,
@@ -71,10 +88,10 @@ public class Plausible.WebView : WebKit.WebView {
         Gdk.Event event,
         WebKit.HitTestResult hit_test_result
     ) {
-        // Disable context menu
-        // TODO: only disable when not running from Terminal
-        // https://github.com/cassidyjames/plausible/issues/11
-        return true;
-        // return false;
+        if (is_terminal) {
+            return Gdk.EVENT_PROPAGATE;
+        }
+
+        return !Gdk.EVENT_PROPAGATE;
     }
 }
