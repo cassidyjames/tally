@@ -4,6 +4,8 @@
  */
 
 public class Plausible.WebView : WebKit.WebView {
+    private bool is_terminal = false;
+
     public WebView () {
         Object (
             hexpand: true,
@@ -13,13 +15,13 @@ public class Plausible.WebView : WebKit.WebView {
     }
 
     construct {
+        is_terminal = Posix.isatty (Posix.STDIN_FILENO);
+
         var webkit_settings = new WebKit.Settings () {
             default_font_family = Gtk.Settings.get_default ().gtk_font_name,
             enable_accelerated_2d_canvas = true,
             enable_back_forward_navigation_gestures = true,
-            // TODO: only enable when running from Terminal
-            // https://github.com/cassidyjames/plausible/issues/11
-            // enable_developer_extras = true,
+            enable_developer_extras = is_terminal,
             enable_dns_prefetching = true,
             enable_html5_database = true,
             enable_html5_local_storage = true,
@@ -86,8 +88,7 @@ public class Plausible.WebView : WebKit.WebView {
         Gdk.Event event,
         WebKit.HitTestResult hit_test_result
     ) {
-        // Only when launched from console/TTY/terminal
-        if (Posix.isatty (Posix.STDIN_FILENO)) {
+        if (is_terminal) {
             return Gdk.EVENT_PROPAGATE;
         }
 
