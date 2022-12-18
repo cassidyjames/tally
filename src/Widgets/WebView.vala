@@ -28,10 +28,15 @@ public class Plausible.WebView : WebKit.WebView {
             hardware_acceleration_policy = WebKit.HardwareAccelerationPolicy.ALWAYS
         };
 
-        // NOTE: Show only the main UI and login form; could be handled better
-        // if the Plausible web app used a semantic footer instead of a div
+        // NOTE: Show only the main UI and login form, plus tweak some browser
+        // default behaviors to feel more app-like.
         var custom_css = new WebKit.UserStyleSheet (
             """
+            html {
+              -webkit-user-select: none;
+              cursor: default;
+            }
+
             nav,
             main + * {
               display: none;
@@ -39,6 +44,16 @@ public class Plausible.WebView : WebKit.WebView {
 
             main {
               margin-top: -1.5em;
+            }
+
+            button,
+            [role=button],
+            .button,
+            select,
+            .cursor-pointer,
+            .cursor-pointer:hover,
+            a:not([href^="http"]) {
+              cursor: default!important;
             }
             """,
             WebKit.UserContentInjectedFrames.TOP_FRAME,
