@@ -1,7 +1,7 @@
 install_data(
-  'icon.png',
-  install_dir: get_option('datadir') / 'icons' / 'hicolor' / '128x128' / 'apps',
-  rename: meson.project_name() + '.png'
+  'icons' / 'tally.svg',
+  install_dir: get_option('datadir') / 'icons' / 'hicolor' / 'scalable' / 'apps',
+  rename: meson.project_name() + '.svg'
 )
 
 install_data(

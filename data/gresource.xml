@@ -5,6 +5,6 @@
     <file>style-dark.css</file>
   </gresource>
   <gresource prefix="/com/cassidyjames/plausible/icons/scalable/actions/">
-    <file alias="icon.png">icon.png</file>
+    <file alias="tally.svg">icons/tally.svg</file>
   </gresource>
 </gresources>
