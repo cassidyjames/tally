@@ -1,6 +1,6 @@
 /*
  * SPDX-License-Identifier: GPL-3.0-or-later
- * SPDX-FileCopyrightText: 2020–2022 Cassidy James Blaede <c@ssidyjam.es>
+ * SPDX-FileCopyrightText: 2020–2023 Cassidy James Blaede <c@ssidyjam.es>
  */
 
 public class Plausible.MainWindow : Adw.ApplicationWindow {
@@ -74,7 +74,7 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
             title = _("%s for Plausible").printf (App.NAME),
             /// TRANSLATORS: the string is the domain name, e.g. plausible.io
             description = _("Loading the <b>%s</b> dashboard…").printf (domain),
-            icon_name = "icon"
+            icon_name = APP_ID
         };
 
         var stack = new Gtk.Stack () {
