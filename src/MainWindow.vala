@@ -1,6 +1,6 @@
 /*
  * SPDX-License-Identifier: GPL-3.0-or-later
- * SPDX-FileCopyrightText: 2020–2023 Cassidy James Blaede <c@ssidyjam.es>
+ * SPDX-FileCopyrightText: 2020–2024 Cassidy James Blaede <c@ssidyjam.es>
  */
 
 public class Plausible.MainWindow : Adw.ApplicationWindow {
@@ -17,19 +17,20 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
     public MainWindow (Gtk.Application application) {
         Object (
             application: application,
+            height_request: 180,
             icon_name: APP_ID,
             resizable: true,
             title: App.NAME,
-            width_request: 360
+            width_request: 300
         );
         add_action_entries (ACTION_ENTRIES, this);
     }
 
     construct {
-        var sites_button = new Gtk.Button.with_label ("Sites") {
+        var sites_button = new Gtk.Button.with_label ("_Sites") {
             valign = Gtk.Align.CENTER
         };
-        sites_button.get_style_context ().add_class ("back-button");
+        sites_button.add_css_class ("back-button");
 
         sites_revealer = new Gtk.Revealer () {
             transition_duration = 200,
@@ -38,12 +39,12 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
         sites_revealer.child = sites_button;
 
         var site_menu = new Menu ();
-        site_menu.append (_("Account Settings"), "win.account_settings");
-        site_menu.append (_("Log Out…"), "win.log_out");
+        site_menu.append (_("Account _Settings"), "win.account_settings");
+        site_menu.append (_("_Log Out…"), "win.log_out");
 
         var app_menu = new Menu ();
-        app_menu.append (_("Custom Domain…"), "win.custom_domain");
-        app_menu.append (_("About %s").printf (App.NAME), "win.about");
+        app_menu.append (_("_Custom Domain…"), "win.custom_domain");
+        app_menu.append (_("_About %s").printf (App.NAME), "win.about");
 
         var menu = new Menu ();
         menu.append_section (null, site_menu);
@@ -52,13 +53,12 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
         var menu_button = new Gtk.MenuButton () {
             icon_name = "open-menu-symbolic",
             menu_model = menu,
-            tooltip_text = _("Menu"),
+            tooltip_text = _("Main Menu"),
         };
 
         var header = new Adw.HeaderBar ();
         header.pack_start (sites_revealer);
         header.pack_end (menu_button);
-        // header.pack_end (account_revealer);
 
         web_view = new Plausible.WebView ();
 
@@ -82,7 +82,7 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
             transition_duration = 400,
             transition_type = Gtk.StackTransitionType.UNDER_UP
         };
-        stack.get_style_context ().add_class ("loading");
+        stack.add_css_class ("loading");
         stack.add_named (status_page, "loading");
         stack.add_named (web_view, "web");
 
@@ -153,21 +153,6 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
                 web_view.uri != "https://" + domain + "/sites"
             );
 
-            // TODO: Figure out how to disable the relevant actions when on
-            // these URIs.
-            //
-            // account_revealer.reveal_child = (
-            //     web_view.uri != "https://" + domain + "/login" &&
-            //     web_view.uri != "https://" + domain + "/register" &&
-            //     web_view.uri != "https://" + domain + "/password/request-reset"
-            // );
-            //
-            // if (web_view.uri == "https://" + domain + "/settings") {
-            //     account_stack.visible_child_name = "logout";
-            // } else {
-            //     account_stack.visible_child_name = "account";
-            // }
-
             App.settings.set_string ("current-url", web_view.uri);
         }
     }
@@ -235,8 +220,8 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
             default_response = "save",
             extra_child = domain_grid,
         };
-        domain_dialog.add_response ("close", "Cancel");
-        domain_dialog.add_response ("save", _("Set Domain"));
+        domain_dialog.add_response ("close", "_Cancel");
+        domain_dialog.add_response ("save", _("_Set Domain"));
         domain_dialog.set_response_appearance ("save", Adw.ResponseAppearance.SUGGESTED);
 
         domain_dialog.present ();
@@ -270,8 +255,8 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
             body_use_markup = true,
             default_response = "log_out"
         };
-        log_out_dialog.add_response ("close", "Stay Logged In");
-        log_out_dialog.add_response ("log_out", _("Log Out"));
+        log_out_dialog.add_response ("close", "_Stay Logged In");
+        log_out_dialog.add_response ("log_out", _("_Log Out"));
         log_out_dialog.set_response_appearance ("log_out", Adw.ResponseAppearance.DESTRUCTIVE);
 
         log_out_dialog.present ();
@@ -284,7 +269,7 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
                 // Instead, we clear cookies then load /sites, which will prompt for
                 // login before showing the dashboard once again.
 
-                web_view.get_website_data_manager ().clear.begin (
+                web_view.network_session.get_website_data_manager ().clear.begin (
                     WebKit.WebsiteDataTypes.COOKIES, 0, null, () => {
                         debug ("Cleared cookies; going home.");
                         web_view.load_uri ("https://" + domain + "/sites");

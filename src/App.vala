@@ -1,6 +1,6 @@
 /*
  * SPDX-License-Identifier: GPL-3.0-or-later
- * SPDX-FileCopyrightText: 2020–2023 Cassidy James Blaede <c@ssidyjam.es>
+ * SPDX-FileCopyrightText: 2020–2024 Cassidy James Blaede <c@ssidyjam.es>
  */
 
 public class Plausible.App : Adw.Application {
