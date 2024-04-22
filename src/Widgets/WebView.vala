@@ -10,6 +10,7 @@ public class Plausible.WebView : WebKit.WebView {
         Object (
             hexpand: true,
             vexpand: true,
+            network_session: new WebKit.NetworkSession (null, null),
             user_content_manager: new WebKit.UserContentManager ()
         );
     }
@@ -38,16 +39,17 @@ public class Plausible.WebView : WebKit.WebView {
               cursor: default;
             }
 
-            body > div:not(:first-child) {
-              display: none;
-            }
-
             body > nav {
               display: none;
             }
 
-            main {
+            body > main {
               margin-top: -1.5em;
+            }
+
+            /* Footer */
+            body > main + div {
+              display: none;
             }
 
             button,
