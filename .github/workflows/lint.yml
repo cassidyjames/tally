@@ -1,13 +1,18 @@
-name: CI
-
-on: [push, pull_request]
+name: Lint
+on:
+  pull_request:
 
 jobs:
   lint:
+    name: Vala Lint
     runs-on: ubuntu-latest
+
     container:
       image: valalang/lint
+
     steps:
-    - uses: actions/checkout@v1
-    - name: Lint
-      run: io.elementary.vala-lint -d .
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Lint
+        run: io.elementary.vala-lint -d .
