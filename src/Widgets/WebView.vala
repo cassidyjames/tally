@@ -1,6 +1,6 @@
 /*
  * SPDX-License-Identifier: GPL-3.0-or-later
- * SPDX-FileCopyrightText: 2020–2022 Cassidy James Blaede <c@ssidyjam.es>
+ * SPDX-FileCopyrightText: 2020–2024 Cassidy James Blaede <c@ssidyjam.es>
  */
 
 public class Plausible.WebView : WebKit.WebView {
@@ -10,6 +10,7 @@ public class Plausible.WebView : WebKit.WebView {
         Object (
             hexpand: true,
             vexpand: true,
+            network_session: new WebKit.NetworkSession (null, null),
             user_content_manager: new WebKit.UserContentManager ()
         );
     }
@@ -19,7 +20,6 @@ public class Plausible.WebView : WebKit.WebView {
 
         var webkit_settings = new WebKit.Settings () {
             default_font_family = Gtk.Settings.get_default ().gtk_font_name,
-            enable_accelerated_2d_canvas = true,
             enable_back_forward_navigation_gestures = true,
             enable_developer_extras = is_terminal,
             enable_dns_prefetching = true,
@@ -39,13 +39,17 @@ public class Plausible.WebView : WebKit.WebView {
               cursor: default;
             }
 
-            nav,
-            main + * {
+            body > nav {
               display: none;
             }
 
-            main {
+            body > main {
               margin-top: -1.5em;
+            }
+
+            /* Footer */
+            body > main + div {
+              display: none;
             }
 
             button,
@@ -66,9 +70,27 @@ public class Plausible.WebView : WebKit.WebView {
         user_content_manager.add_style_sheet (custom_css);
 
         settings = webkit_settings;
-        web_context = new Plausible.WebContext ();
 
-        context_menu.connect (on_context_menu);
+        var cookie_manager = network_session.get_cookie_manager ();
+        cookie_manager.set_accept_policy (WebKit.CookieAcceptPolicy.ALWAYS);
+
+        string config_dir = Path.build_path (
+            Path.DIR_SEPARATOR_S,
+            Environment.get_user_config_dir (),
+            Environment.get_prgname ()
+        );
+
+        DirUtils.create_with_parents (config_dir, 0700);
+
+        string cookies = Path.build_filename (config_dir, "cookies");
+        cookie_manager.set_persistent_storage (
+            cookies,
+            WebKit.CookiePersistentStorage.SQLITE
+        );
+
+        context_menu.connect (() => {
+            return !is_terminal;
+        });
 
         var back_click_gesture = new Gtk.GestureClick () {
             button = 8
@@ -81,17 +103,5 @@ public class Plausible.WebView : WebKit.WebView {
         };
         forward_click_gesture.pressed.connect (go_forward);
         add_controller (forward_click_gesture);
-    }
-
-    private bool on_context_menu (
-        WebKit.ContextMenu context_menu,
-        Gdk.Event event,
-        WebKit.HitTestResult hit_test_result
-    ) {
-        if (is_terminal) {
-            return Gdk.EVENT_PROPAGATE;
-        }
-
-        return !Gdk.EVENT_PROPAGATE;
     }
 }

@@ -1,7 +1,7 @@
 project(
   'com.cassidyjames.plausible',
   'vala', 'c',
-  version: '3.0.1'
+  version: '3.1.0'
 )
 
 gnome = import('gnome')
@@ -29,7 +29,6 @@ executable(
   meson.project_name(),
   'src' / 'App.vala',
   'src' / 'MainWindow.vala',
-  'src' / 'WebContext.vala',
   'src' / 'Widgets' / 'WebView.vala',
   asresources,
   config_file,
@@ -37,7 +36,7 @@ executable(
     dependency('glib-2.0'),
     dependency('gtk4'),
     dependency('libadwaita-1'),
-    dependency('webkit2gtk-5.0'),
+    dependency('webkitgtk-6.0'),
     meson.get_compiler('vala').find_library('posix'),
   ],
   install: true

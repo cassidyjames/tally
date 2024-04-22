@@ -1,7 +1,7 @@
 {
     "app-id" : "com.cassidyjames.plausible",
     "runtime" : "org.gnome.Platform",
-    "runtime-version" : "43",
+    "runtime-version" : "46",
     "sdk" : "org.gnome.Sdk",
     "command" : "com.cassidyjames.plausible",
     "finish-args" : [
