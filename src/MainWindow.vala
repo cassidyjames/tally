@@ -21,13 +21,13 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
             icon_name: APP_ID,
             resizable: true,
             title: App.NAME,
-            width_request: 300
+            width_request: 360
         );
         add_action_entries (ACTION_ENTRIES, this);
     }
 
     construct {
-        var sites_button = new Gtk.Button.with_label ("_Sites") {
+        var sites_button = new Gtk.Button.with_label ("Sites") {
             valign = Gtk.Align.CENTER
         };
         sites_button.add_css_class ("back-button");
@@ -280,8 +280,8 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
     }
 
     private void on_about_activate () {
-        var about_window = new Adw.AboutWindow () {
-            transient_for = this,
+        var about_window = new Adw.AboutDialog () {
+            // transient_for = this,
 
             application_icon = APP_ID,
             application_name = _("%s for Plausible").printf (App.NAME),
@@ -318,6 +318,6 @@ Email: hello@plausible.io
 """
         );
 
-        about_window.present ();
+        about_window.present (this);
     }
 }
