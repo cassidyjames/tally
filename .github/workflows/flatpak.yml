@@ -1,6 +1,9 @@
 name: Flatpak
-
-on: [push, pull_request]
+on:
+  push:
+    branches:
+    - main
+  pull_request:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -8,35 +11,15 @@ concurrency:
 
 jobs:
   flatpak:
+    name: Flathub
     runs-on: ubuntu-latest
-
     container:
-      image: bilelmoussaoui/flatpak-github-actions:gnome-42
+      image: ghcr.io/flathub-infra/flatpak-github-actions:gnome-46
       options: --privileged
-
-    strategy:
-      matrix:
-        arch: [x86_64, aarch64]
-      # Don't fail the whole workflow if one architecture fails
-      fail-fast: false
     steps:
-    - uses: actions/checkout@v2
-
-    - name: Install deps
-      run: |
-        dnf -y install docker
-      if: ${{ matrix.arch == 'aarch64' }}
-
-    - name: Set up QEMU
-      id: qemu
-      uses: docker/setup-qemu-action@v1
+    - uses: actions/checkout@v4
+    - uses: flathub-infra/flatpak-github-actions/flatpak-builder@master
       with:
-        platforms: arm64
-      if: ${{ matrix.arch == 'aarch64' }}
-
-    - uses: bilelmoussaoui/flatpak-github-actions/flatpak-builder@v4
-      with:
-        bundle: plausible-${{ matrix.arch }}.flatpak
+        bundle: tally.flatpak
         manifest-path: com.cassidyjames.plausible.json
         cache-key: "flatpak-builder-${{ github.sha }}"
-        arch: ${{ matrix.arch }}
