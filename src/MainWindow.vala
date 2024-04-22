@@ -211,10 +211,9 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
         domain_grid.attach (domain_label, 0, 0);
         domain_grid.attach (domain_entry, 1, 0);
 
-        var domain_dialog = new Adw.MessageDialog (
-            this,
+        var domain_dialog = new Adw.AlertDialog (
             "Set a Custom Domain",
-            "If you’re self-hosting Plausible or using an instance other than <b>%s</b>, set the domain name here.".printf (domain)
+            "If you’re self-hosting Plausible or using an instance other than <b>%s</b>, set the domain name.".printf (domain)
         ) {
             body_use_markup = true,
             default_response = "save",
@@ -224,7 +223,7 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
         domain_dialog.add_response ("save", _("_Set Domain"));
         domain_dialog.set_response_appearance ("save", Adw.ResponseAppearance.SUGGESTED);
 
-        domain_dialog.present ();
+        domain_dialog.present (this);
 
         domain_dialog.response.connect ((response_id) => {
             if (response_id == "save") {
