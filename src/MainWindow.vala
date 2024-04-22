@@ -246,8 +246,7 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
     private void on_log_out_activate () {
         string domain = App.settings.get_string ("domain");
 
-        var log_out_dialog = new Adw.MessageDialog (
-            this,
+        var log_out_dialog = new Adw.AlertDialog (
             "Log out of Plausible?",
             "You will need to re-enter your email and password for <b>%s</b> to log back in.".printf (domain)
         ) {
@@ -258,7 +257,7 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
         log_out_dialog.add_response ("log_out", _("_Log Out"));
         log_out_dialog.set_response_appearance ("log_out", Adw.ResponseAppearance.DESTRUCTIVE);
 
-        log_out_dialog.present ();
+        log_out_dialog.present (this);
 
         log_out_dialog.response.connect ((response_id) => {
             if (response_id == "log_out") {
