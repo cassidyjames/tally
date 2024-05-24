@@ -5,9 +5,9 @@
 
 Hybrid native + web app for [Plausible Analytics](https://plausible.io).
 
-![Screenshot](data/screenshots/sites-light.png)      | ![Screenshot](data/screenshots/dashboard-dark.png)
----------------------------------------------------- | -----------------------------------------------------
-![Screenshot](data/screenshots/extra/about-dark.png) | ![Screenshot](data/screenshots/extra/domain-light.png) ![Screenshot](data/screenshots/extra/logout-light.png)
+![Screenshot](data/screenshots/dashboard-light.png) | ![Screenshot](data/screenshots/dashboard-dark.png)
+--------------------------------------------------- | --------------------------------------------------
+![Screenshot](data/screenshots/sites-dark.png)      | ![Screenshot](data/screenshots/sites-light.png)
 
 Plausible is the simple privacy-friendly alternative to Google Analytics. Tally wraps the Plausible web app in a native UI, integrating better with desktop operating systems. Native features include:
 
@@ -31,4 +31,3 @@ Other features include:
 I recommend using GNOME Builder with default settings to build the Flatpak.
 
 [flathub]: https://flathub.org/apps/details/com.cassidyjames.plausible
-
