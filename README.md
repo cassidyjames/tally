@@ -1,5 +1,6 @@
-[![Flathub](https://img.shields.io/flathub/v/com.cassidyjames.plausible?logo=flathub&logoColor=white&style=for-the-badge)][flathub]
-[![Installs](https://img.shields.io/flathub/downloads/com.cassidyjames.plausible?label=Installs&logo=flathub&logoColor=white&style=for-the-badge)][flathub]
+[![Only on Flathub](https://img.shields.io/badge/Only_on_Flathub-white?logo=flathub&logoColor=white&labelColor=black)][Only on Flathub]
+[![Installs](https://img.shields.io/flathub/downloads/com.cassidyjames.plausible?label=Installs)][Flathub]
+[![Please do not theme this app](https://stopthemingmy.app/badge.svg)](https://stopthemingmy.app)
 
 # Tally for Plausible
 
@@ -30,4 +31,5 @@ Other features include:
 
 I recommend using GNOME Builder with default settings to build the Flatpak.
 
-[flathub]: https://flathub.org/apps/details/com.cassidyjames.plausible
+[Only on Flathub]: https://cassidyjam.es/apps#only-on-flathub
+[Flathub]: https://flathub.org/apps/details/com.cassidyjames.plausible
