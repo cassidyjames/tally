@@ -40,7 +40,7 @@
     <control>touch</control>
   </supports>
   <releases>
-    <release version="3.2.0" date="2024-05-24">
+    <release version="3.2.1" date="2024-05-24">
       <description>
         <p>Fresh Colors</p>
         <ul>
@@ -135,16 +135,16 @@
   </releases>
   <screenshots>
     <screenshot type="default">
-      <image>https://raw.githubusercontent.com/cassidyjames/tally/d1723acc47ff79df9764aeacd16eeb6091934cb2/data/screenshots/dashboard-light.png</image>
+      <image>https://raw.githubusercontent.com/cassidyjames/tally/2f096df38912dc46b4dd1701954f34dc152a6639/data/screenshots/dashboard-light.png</image>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/cassidyjames/tally/d1723acc47ff79df9764aeacd16eeb6091934cb2/data/screenshots/dashboard-dark.png</image>
+      <image>https://raw.githubusercontent.com/cassidyjames/tally/2f096df38912dc46b4dd1701954f34dc152a6639/data/screenshots/dashboard-dark.png</image>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/cassidyjames/tally/d1723acc47ff79df9764aeacd16eeb6091934cb2/data/screenshots/sites-light.png</image>
+      <image>https://raw.githubusercontent.com/cassidyjames/tally/2f096df38912dc46b4dd1701954f34dc152a6639/data/screenshots/sites-light.png</image>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/cassidyjames/tally/d1723acc47ff79df9764aeacd16eeb6091934cb2/data/screenshots/sites-dark.png</image>
+      <image>https://raw.githubusercontent.com/cassidyjames/tally/2f096df38912dc46b4dd1701954f34dc152a6639/data/screenshots/sites-dark.png</image>
     </screenshot>
   </screenshots>
   <content_rating type="oars-1.1">
