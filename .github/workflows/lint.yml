@@ -1,6 +1,8 @@
 name: Lint
 on:
   pull_request:
+    paths:
+    - '**.vala'
 
 jobs:
   lint:
