@@ -1,14 +1,17 @@
-@define-color headerbar_bg_color #5850ec;
-@define-color headerbar_fg_color #fff;
-@define-color headerbar_border_color #fff;
+@define-color accent_color #4f46e5;
+@define-color accent_alt_color #1f2961;
+
+@define-color headerbar_bg_color #f4f5fc;
+@define-color headerbar_fg_color @accent_color;
+@define-color headerbar_border_color @headerbar_fg_color;
 @define-color headerbar_backdrop_color mix(@headerbar_bg_color, @window_bg_color, 0.2);
 
-@define-color accent_color @headerbar_bg_color;
-
-@define-color window_bg_color #f9fafb;
+@define-color window_bg_color #f8fafc;
+@define-color window_fg_color #0f172a;
 @define-color dialog_bg_color #fff;
 @define-color popover_bg_color @dialog_bg_color;
 
 .loading {
-  background-color: @dialog_bg_color;
+  background-color: @headerbar_bg_color;
+  color: @accent_alt_color;
 }

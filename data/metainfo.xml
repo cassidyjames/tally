@@ -124,22 +124,16 @@
   </releases>
   <screenshots>
     <screenshot type="default">
-      <image>https://raw.githubusercontent.com/cassidyjames/tally/3.0.1/data/screenshots/dashboard-dark.png</image>
-    </screenshot>
-    <screenshot>
       <image>https://raw.githubusercontent.com/cassidyjames/tally/3.0.1/data/screenshots/dashboard-light.png</image>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/cassidyjames/tally/3.0.1/data/screenshots/sites-dark.png</image>
+      <image>https://raw.githubusercontent.com/cassidyjames/tally/3.0.1/data/screenshots/dashboard-dark.png</image>
     </screenshot>
     <screenshot>
       <image>https://raw.githubusercontent.com/cassidyjames/tally/3.0.1/data/screenshots/sites-light.png</image>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/cassidyjames/tally/3.0.1/data/screenshots/login-dark.png</image>
-    </screenshot>
-    <screenshot>
-      <image>https://raw.githubusercontent.com/cassidyjames/tally/3.0.1/data/screenshots/login-light.png</image>
+      <image>https://raw.githubusercontent.com/cassidyjames/tally/3.0.1/data/screenshots/sites-dark.png</image>
     </screenshot>
   </screenshots>
   <content_rating type="oars-1.1">
@@ -152,7 +146,7 @@
   <url type="help">https://cassidyjames.com/support</url>
   <!--url type="contact">https://cassidyjames.com/support</url-->
   <branding>
-    <color type="primary" scheme_preference="light">#b5b3fe</color>
-    <color type="primary" scheme_preference="dark">#393499</color>
+    <color type="primary" scheme_preference="light">#9e99fe</color>
+    <color type="primary" scheme_preference="dark">#352f99</color>
   </branding>
 </component>
