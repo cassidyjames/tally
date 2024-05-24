@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gresources>
-  <gresource prefix="/com/cassidyjames/plausible">
+  <gresource prefix="/com/cassidyjames/plausible/">
+    <file preprocess="xml-stripblanks">metainfo.xml</file>
     <file>style.css</file>
     <file>style-dark.css</file>
   </gresource>

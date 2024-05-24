@@ -1,7 +1,7 @@
 project(
   'com.cassidyjames.plausible',
   'vala', 'c',
-  version: '3.1.0'
+  version: '3.2.0'
 )
 
 gnome = import('gnome')

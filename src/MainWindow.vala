@@ -27,7 +27,7 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
     }
 
     construct {
-        var sites_button = new Gtk.Button.with_label ("Sites") {
+        var sites_button = new Gtk.Button.with_label (_("Sites")) {
             valign = Gtk.Align.CENTER
         };
         sites_button.add_css_class ("back-button");
@@ -44,6 +44,7 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
 
         var app_menu = new Menu ();
         app_menu.append (_("_Custom Domain…"), "win.custom_domain");
+        /// TRANSLATORS: %s is the app name
         app_menu.append (_("_About %s").printf (App.NAME), "win.about");
 
         var menu = new Menu ();
@@ -71,8 +72,9 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
         }
 
         var status_page = new Adw.StatusPage () {
+            /// TRANSLATORS: %s is the app name
             title = _("%s for Plausible").printf (App.NAME),
-            /// TRANSLATORS: the string is the domain name, e.g. plausible.io
+            /// TRANSLATORS: %s is the Plausible instance's domain name
             description = _("Loading the <b>%s</b> dashboard…").printf (domain),
             icon_name = APP_ID
         };
@@ -212,14 +214,15 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
         domain_grid.attach (domain_entry, 1, 0);
 
         var domain_dialog = new Adw.AlertDialog (
-            "Set a Custom Domain",
-            "If you’re self-hosting Plausible or using an instance other than <b>%s</b>, set the domain name.".printf (domain)
+            _("Set a Custom Domain"),
+            /// TRANSLATORS: %s is the Plausible instance's domain name
+            _("If you’re self-hosting Plausible or using an instance other than <b>%s</b>, set the domain name.").printf (domain)
         ) {
             body_use_markup = true,
             default_response = "save",
             extra_child = domain_grid,
         };
-        domain_dialog.add_response ("close", "_Cancel");
+        domain_dialog.add_response ("close", _("_Cancel"));
         domain_dialog.add_response ("save", _("_Set Domain"));
         domain_dialog.set_response_appearance ("save", Adw.ResponseAppearance.SUGGESTED);
 
@@ -247,13 +250,14 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
         string domain = App.settings.get_string ("domain");
 
         var log_out_dialog = new Adw.AlertDialog (
-            "Log out of Plausible?",
-            "You will need to re-enter your email and password for <b>%s</b> to log back in.".printf (domain)
+            _("Log out of Plausible?"),
+            /// TRANSLATORS: %s is the Plausible instance's domain name
+            _("You will need to re-enter your email and password for <b>%s</b> to log back in.").printf (domain)
         ) {
             body_use_markup = true,
             default_response = "log_out"
         };
-        log_out_dialog.add_response ("close", "_Stay Logged In");
+        log_out_dialog.add_response ("close", _("_Stay Logged In"));
         log_out_dialog.add_response ("log_out", _("_Log Out"));
         log_out_dialog.set_response_appearance ("log_out", Adw.ResponseAppearance.DESTRUCTIVE);
 
@@ -278,33 +282,27 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
     }
 
     private void on_about_activate () {
-        var about_window = new Adw.AboutDialog () {
-            // transient_for = this,
-
-            application_icon = APP_ID,
+        var about_dialog = new Adw.AboutDialog.from_appdata (
+            "/com/cassidyjames/plausible/metainfo.xml", VERSION
+        ) {
+            /// TRANSLATORS: %s is the app name
             application_name = _("%s for Plausible").printf (App.NAME),
-            developer_name = App.DEVELOPER,
-            version = VERSION,
-
             comments = _("Tally is a hybrid native + web app for Plausible Analytics, the lightweight and open-source website analytics tool."),
 
-            website = App.URL,
-            issue_url = "https://github.com/cassidyjames/plausible/issues",
-
-            // Credits
-            developers = { "%s <%s>".printf (App.DEVELOPER, App.EMAIL) },
-            designers = { "%s %s".printf (App.DEVELOPER, App.URL) },
-
-            /// The translator credits. Please translate this with your name(s).
+            /// TRANSLATORS: Translator credits; please translate this with your name(s)!
             translator_credits = _("translator-credits"),
-
-            // Legal
-            copyright = "Copyright © 2020–2022 %s".printf (App.DEVELOPER),
-            license_type = Gtk.License.GPL_3_0,
+            artists = {
+                "Micah Ilbery https://ilbery.family/@micah",
+            },
         };
-        about_window.add_link (_("About Plausible Analytics"), "https://plausible.io/about");
-        about_window.add_link (_("Plausible Analytics Privacy Policy"), "https://plausible.io/privacy");
-        about_window.add_legal_section ("Plausible Analytics", null, Gtk.License.CUSTOM,
+        about_dialog.copyright = "© 2020–%i %s".printf (
+            new DateTime.now_local ().get_year (),
+            about_dialog.developer_name
+        );
+
+        about_dialog.add_link (_("About Plausible Analytics"), "https://plausible.io/about");
+        about_dialog.add_link (_("Plausible Analytics Privacy Policy"), "https://plausible.io/privacy");
+        about_dialog.add_legal_section ("Plausible Analytics", null, Gtk.License.CUSTOM,
 """Plausible Analytics is a product of:
 
 Plausible Insights OÜ
@@ -316,6 +314,6 @@ Email: hello@plausible.io
 """
         );
 
-        about_window.present (this);
+        about_dialog.present (this);
     }
 }
