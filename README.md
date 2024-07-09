@@ -25,7 +25,7 @@ Other features include:
 - Slimmed down web app UI (no header or footer with external links)
 - Custom domain support (e.g. self-hosted, not on plausible.io)
 
-<a href='https://flathub.org/apps/details/com.cassidyjames.plausible'><img width='180' alt='Download on Flathub' src='https://flathub.org/assets/badges/flathub-badge-en.svg' /></a>
+<a href='https://flathub.org/apps/details/com.cassidyjames.plausible'><img width='180' alt='Download on Flathub' src='https://flathub.org/api/badge?locale=en' /></a>
 
 ## Developing and Building
 
