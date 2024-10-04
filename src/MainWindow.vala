@@ -200,27 +200,36 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
         string domain = App.settings.get_string ("domain");
         string default_domain = App.settings.get_default_value ("domain").get_string ();
 
-        var domain_label = new Gtk.Label ("https://");
-        domain_label.add_css_class ("dim-label");
+        // var domain_label = new Gtk.Label ("https://");
+        // domain_label.add_css_class ("dim-label");
 
-        var domain_entry = new Gtk.Entry.with_buffer (new Gtk.EntryBuffer ((uint8[]) domain)) {
+        // var domain_entry = new Gtk.Entry.with_buffer (new Gtk.EntryBuffer ((uint8[]) domain)) {
+        //     activates_default = true,
+        //     hexpand = true,
+        //     placeholder_text = default_domain
+        // };
+
+        var domain_entry = new Adw.EntryRow () {
             activates_default = true,
-            hexpand = true,
-            placeholder_text = default_domain
+            input_purpose = Gtk.InputPurpose.URL,
+            text = domain,
+            title = _("Domain"),
         };
 
-        var domain_grid = new Gtk.Grid ();
-        domain_grid.attach (domain_label, 0, 0);
-        domain_grid.attach (domain_entry, 1, 0);
+        var domain_box = new Gtk.ListBox () {
+            selection_mode = Gtk.SelectionMode.NONE,
+        };
+        domain_box.add_css_class ("boxed-list");
+        domain_box.append (domain_entry);
 
         var domain_dialog = new Adw.AlertDialog (
             _("Set a Custom Domain"),
             /// TRANSLATORS: %s is the Plausible instance's domain name
-            _("If you’re self-hosting Plausible or using an instance other than <b>%s</b>, set the domain name.").printf (domain)
+            _("i.e. if self-hosting Plausible or using an instance other than the default <b>%s</b>.").printf (domain)
         ) {
             body_use_markup = true,
             default_response = "save",
-            extra_child = domain_grid,
+            extra_child = domain_box,
         };
         domain_dialog.add_response ("close", _("_Cancel"));
         domain_dialog.add_response ("save", _("_Set Domain"));
@@ -230,7 +239,7 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
 
         domain_dialog.response.connect ((response_id) => {
             if (response_id == "save") {
-                string new_domain = domain_entry.buffer.text;
+                string new_domain = domain_entry.text;
 
                 if (new_domain == "") {
                     new_domain = default_domain;
@@ -255,7 +264,8 @@ public class Plausible.MainWindow : Adw.ApplicationWindow {
             _("You will need to re-enter your email and password for <b>%s</b> to log back in.").printf (domain)
         ) {
             body_use_markup = true,
-            default_response = "log_out"
+            default_response = "log_out",
+            prefer_wide_layout = true,
         };
         log_out_dialog.add_response ("close", _("_Stay Logged In"));
         log_out_dialog.add_response ("log_out", _("_Log Out"));

@@ -40,6 +40,14 @@
     <control>touch</control>
   </supports>
   <releases>
+    <release version="3.3.0" date="2024-10-03">
+      <description>
+        <p>GNOME 47 “Denver”</p>
+        <ul>
+          <li>Updated with the latest GNOME 47 platform and Adwaita 1.6</li>
+        </ul>
+      </description>
+    </release>
     <release version="3.2.1" date="2024-05-24">
       <description>
         <p>Fresh Colors</p>

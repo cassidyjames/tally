@@ -1,8 +1,8 @@
 project(
   'com.cassidyjames.plausible',
   'vala', 'c',
-  version: '3.2.1',
-  meson_version: '>= 0.62',
+  version: '3.3.0',
+  meson_version: '>=1.5.1',
 )
 
 i18n = import('i18n')
@@ -36,10 +36,10 @@ executable(
   asresources,
   config_file,
   dependencies: [
-    dependency('glib-2.0'),
-    dependency('gtk4'),
-    dependency('libadwaita-1', version: '>=1.5'),
-    dependency('webkitgtk-6.0'),
+    dependency('glib-2.0', version: '>=2.82.0'),
+    dependency('gtk4', version: '>=4.16.2'),
+    dependency('libadwaita-1', version: '>=1.6.0'),
+    dependency('webkitgtk-6.0', version: '>=2.46.1'),
     meson.get_compiler('vala').find_library('posix'),
   ],
   install: true,

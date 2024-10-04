@@ -1,8 +1,7 @@
-@define-color accent_color #99A8FE;
-@define-color accent_alt_color @accent_color;
+:root {
+  --window-bg-color: #1a202C;
+  --window-fg-color: #f1f5f9;
+  --dialog-bg-color: #1e293b;
 
-@define-color headerbar_bg_color #1e293b;
-
-@define-color window_bg_color #1a202C;
-@define-color window_fg_color #f1f5f9;
-@define-color dialog_bg_color #1e293b;
+  --headerbar-bg-color: var(--dialog-bg-color);
+}

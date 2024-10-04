@@ -1,17 +1,16 @@
-@define-color accent_color #4f46e5;
-@define-color accent_alt_color #1f2961;
+:root {
+  --accent-bg-color: #4f46e5;
+  --window-bg-color: #f8fafc;
+  --window-fg-color: #0f172a;
+  --dialog-bg-color: #fff;
+  --popover-bg-color: var(--dialog-bg-color);
 
-@define-color headerbar_bg_color #f4f5fc;
-@define-color headerbar_fg_color @accent_color;
-@define-color headerbar_border_color @headerbar_fg_color;
-@define-color headerbar_backdrop_color mix(@headerbar_bg_color, @window_bg_color, 0.2);
-
-@define-color window_bg_color #f8fafc;
-@define-color window_fg_color #0f172a;
-@define-color dialog_bg_color #fff;
-@define-color popover_bg_color @dialog_bg_color;
+  --headerbar-bg-color: #f4f5fc;
+  --headerbar-fg-color: var(--accent-color);
+  --headerbar-backdrop-color: mix(var(--headerbar-bg-color), var(--window-bg-color), 0.2);
+}
 
 .loading {
-  background-color: @headerbar_bg_color;
-  color: @accent_alt_color;
+  background-color: var(--headerbar-bg-color);
+  color: var(--accent-color);
 }
