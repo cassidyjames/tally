@@ -30,7 +30,7 @@ public class Plausible.App : Adw.Application {
 
     protected override void activate () {
         var app_window = new MainWindow (this);
-        app_window.show ();
+        app_window.present ();
 
         var quit_action = new SimpleAction ("quit", null);
         var zoom_in_action = new SimpleAction ("zoom-in", null);
