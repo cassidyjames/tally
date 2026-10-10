@@ -169,7 +169,7 @@
   <url type="help">https://cassidyjames.com/support</url>
   <!--url type="contact">https://cassidyjames.com/support</url-->
   <branding>
-    <color type="primary" scheme_preference="light">#9e99fe</color>
-    <color type="primary" scheme_preference="dark">#352f99</color>
+    <color type="primary" scheme_preference="light">#a3b3ff</color>
+    <color type="primary" scheme_preference="dark">#372aac</color>
   </branding>
 </component>
