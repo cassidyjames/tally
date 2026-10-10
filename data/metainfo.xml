@@ -150,7 +150,9 @@
   <content_rating type="oars-1.1">
     <content_attribute id="social-info">mild</content_attribute>
   </content_rating>
-  <developer_name>Cassidy James Blaede</developer_name>
+  <developer id="com.cassidyjames">
+    <name>Cassidy James Blaede</name>
+  </developer>
   <url type="homepage">https://cassidyjames.com</url>
   <url type="bugtracker">https://github.com/cassidyjames/tally/issues</url>
   <url type="donation">https://cassidyjames.com/pay</url>
