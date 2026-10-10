@@ -1,13 +1,14 @@
-@define-color accent_color #4f46e5;
-@define-color accent_alt_color #1f2961;
+/* Plausible's Tailwind palette, where gray is zinc */
+@define-color accent_bg_color oklch(51.1% 0.262 276.966); /* indigo-600 */
+@define-color accent_color @accent_bg_color;
+@define-color accent_alt_color oklch(35.9% 0.144 278.697); /* indigo-900 */
 
-@define-color headerbar_bg_color #f4f5fc;
+@define-color headerbar_bg_color @window_bg_color;
 @define-color headerbar_fg_color @accent_color;
 @define-color headerbar_border_color @headerbar_fg_color;
-@define-color headerbar_backdrop_color mix(@headerbar_bg_color, @window_bg_color, 0.2);
 
-@define-color window_bg_color #f8fafc;
-@define-color window_fg_color #0f172a;
+@define-color window_bg_color oklch(98.5% 0 0); /* gray-50 */
+@define-color window_fg_color oklch(21% 0.006 285.885); /* gray-900 */
 @define-color dialog_bg_color #fff;
 @define-color popover_bg_color @dialog_bg_color;
 
@@ -17,12 +18,13 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  @define-color accent_color #99A8FE;
+  @define-color accent_bg_color oklch(58.5% 0.233 277.117); /* indigo-500 */
+  @define-color accent_color oklch(67.3% 0.182 276.935); /* indigo-400 */
   @define-color accent_alt_color @accent_color;
 
-  @define-color headerbar_bg_color #1e293b;
+  @define-color headerbar_bg_color @dialog_bg_color;
 
-  @define-color window_bg_color #1a202C;
-  @define-color window_fg_color #f1f5f9;
-  @define-color dialog_bg_color #1e293b;
+  @define-color window_bg_color oklch(14.1% 0.005 285.823); /* gray-950 */
+  @define-color window_fg_color oklch(96.7% 0.001 286.375); /* gray-100 */
+  @define-color dialog_bg_color oklch(21% 0.006 285.885); /* gray-900 */
 }
