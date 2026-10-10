@@ -69,6 +69,12 @@ public class Plausible.WebView : WebKit.WebView {
 
         settings = webkit_settings;
 
+        // WebKitGTK reads gtk-interface-color-scheme but doesn't watch it
+        var gtk_settings = Gtk.Settings.get_default ();
+        gtk_settings.notify["gtk-interface-color-scheme"].connect (() => {
+            gtk_settings.notify_property ("gtk-theme-name");
+        });
+
         var cookie_manager = network_session.get_cookie_manager ();
         cookie_manager.set_accept_policy (WebKit.CookieAcceptPolicy.ALWAYS);
 
