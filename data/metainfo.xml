@@ -45,7 +45,7 @@
         <p>Updated for GNOME 51</p>
         <ul>
           <li>Built on the latest GNOME platform for up-to-date security fixes and a newer web engine</li>
-          <li>Hides Plausible’s header and footer again after changes to the Plausible web app</li>
+          <li>Hide Plausible’s header and footer again after changes to the Plausible web app</li>
           <li>Under-the-hood cleanups for deprecated APIs</li>
         </ul>
       </description>
