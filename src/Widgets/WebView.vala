@@ -38,16 +38,15 @@ public class Plausible.WebView : WebKit.WebView {
               cursor: default;
             }
 
-            body > nav {
+            /* Older self-hosted versions put these directly in body */
+            body > nav,
+            body > div > nav {
               display: none;
             }
 
-            body > main {
-              margin-top: -1.5em;
-            }
-
             /* Footer */
-            body > main + div {
+            body > main + div,
+            body > div > main ~ div {
               display: none;
             }
 
