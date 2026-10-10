@@ -3,7 +3,6 @@
   <gresource prefix="/com/cassidyjames/plausible/">
     <file preprocess="xml-stripblanks">metainfo.xml</file>
     <file>style.css</file>
-    <file>style-dark.css</file>
   </gresource>
   <gresource prefix="/com/cassidyjames/plausible/icons/scalable/actions/">
     <file alias="tally.svg">icons/tally.svg</file>

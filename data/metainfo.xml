@@ -40,6 +40,16 @@
     <control>touch</control>
   </supports>
   <releases>
+    <release version="3.3.0" date="2026-10-09">
+      <description>
+        <p>Updated for GNOME 51</p>
+        <ul>
+          <li>Built on the latest GNOME platform for up-to-date security fixes and a newer web engine</li>
+          <li>Hide Plausible’s header and footer again after changes to the Plausible web app</li>
+          <li>Under-the-hood cleanups for deprecated APIs</li>
+        </ul>
+      </description>
+    </release>
     <release version="3.2.1" date="2024-05-24">
       <description>
         <p>Fresh Colors</p>
@@ -150,14 +160,16 @@
   <content_rating type="oars-1.1">
     <content_attribute id="social-info">mild</content_attribute>
   </content_rating>
-  <developer_name>Cassidy James Blaede</developer_name>
+  <developer id="com.cassidyjames">
+    <name>Cassidy James Blaede</name>
+  </developer>
   <url type="homepage">https://cassidyjames.com</url>
   <url type="bugtracker">https://github.com/cassidyjames/tally/issues</url>
   <url type="donation">https://cassidyjames.com/pay</url>
   <url type="help">https://cassidyjames.com/support</url>
   <!--url type="contact">https://cassidyjames.com/support</url-->
   <branding>
-    <color type="primary" scheme_preference="light">#9e99fe</color>
-    <color type="primary" scheme_preference="dark">#352f99</color>
+    <color type="primary" scheme_preference="light">#a3b3ff</color>
+    <color type="primary" scheme_preference="dark">#372aac</color>
   </branding>
 </component>

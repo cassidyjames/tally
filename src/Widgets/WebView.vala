@@ -22,7 +22,6 @@ public class Plausible.WebView : WebKit.WebView {
             default_font_family = Gtk.Settings.get_default ().gtk_font_name,
             enable_back_forward_navigation_gestures = true,
             enable_developer_extras = is_terminal,
-            enable_dns_prefetching = true,
             enable_html5_database = true,
             enable_html5_local_storage = true,
             enable_smooth_scrolling = true,
@@ -39,16 +38,15 @@ public class Plausible.WebView : WebKit.WebView {
               cursor: default;
             }
 
-            body > nav {
+            /* Older self-hosted versions put these directly in body */
+            body > nav,
+            body > div > nav {
               display: none;
             }
 
-            body > main {
-              margin-top: -1.5em;
-            }
-
             /* Footer */
-            body > main + div {
+            body > main + div,
+            body > div > main ~ div {
               display: none;
             }
 
@@ -70,6 +68,12 @@ public class Plausible.WebView : WebKit.WebView {
         user_content_manager.add_style_sheet (custom_css);
 
         settings = webkit_settings;
+
+        // WebKitGTK reads gtk-interface-color-scheme but doesn't watch it
+        var gtk_settings = Gtk.Settings.get_default ();
+        gtk_settings.notify["gtk-interface-color-scheme"].connect (() => {
+            gtk_settings.notify_property ("gtk-theme-name");
+        });
 
         var cookie_manager = network_session.get_cookie_manager ();
         cookie_manager.set_accept_policy (WebKit.CookieAcceptPolicy.ALWAYS);
